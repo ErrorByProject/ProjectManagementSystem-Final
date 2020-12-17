@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"standalone="no"?>
+<RequirementList>
+<NumberOfRequirements>3</NumberOfRequirements>
+ <Requirement>
+  <ProjectID> 1 </ProjectID>
+  <Name> 1 </Name>
+  <RequirementID> 1111 </RequirementID>
+  <Description-who> 1 </Description-who>
+  <Description-what> 1 </Description-what>
+  <Description-how> 1 </Description-how>
+  <EstimatedHours> 1.0 </EstimatedHours>
+  <Deadline-Day> 1 </Deadline-Day>
+  <Deadline-Month> 1 </Deadline-Month>
+  <Deadline-Year> 1 </Deadline-Year>
+  <OrderNum> 0 </OrderNum>
+ <TeamMembers> </TeamMembers>
+ </Requirement>
+ <Requirement>
+  <ProjectID> 2 </ProjectID>
+  <Name> 2 </Name>
+  <RequirementID> 2222 </RequirementID>
+  <Description-who> 2 </Description-who>
+  <Description-what> 2 </Description-what>
+  <Description-how> 2 </Description-how>
+  <EstimatedHours> 2.0 </EstimatedHours>
+  <Deadline-Day> 2 </Deadline-Day>
+  <Deadline-Month> 2 </Deadline-Month>
+  <Deadline-Year> 2 </Deadline-Year>
+  <OrderNum> 0 </OrderNum>
+ <TeamMembers>null </TeamMembers>
+ </Requirement>
+ <Requirement>
+  <ProjectID> 123 </ProjectID>
+  <Name> 123 </Name>
+  <RequirementID> 1231 </RequirementID>
+  <Description-who> 123 </Description-who>
+  <Description-what> 123 </Description-what>
+  <Description-how> 123 </Description-how>
+  <EstimatedHours> 123.0 </EstimatedHours>
+  <Deadline-Day> 31 </Deadline-Day>
+  <Deadline-Month> 12 </Deadline-Month>
+  <Deadline-Year> 123 </Deadline-Year>
+  <OrderNum> 123 </OrderNum>
+ <TeamMembers>gay </TeamMembers>
+ </Requirement>
+</RequirementList>

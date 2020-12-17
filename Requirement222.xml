@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"standalone="no"?>
+<RequirementList>
+<NumberOfRequirements>1</NumberOfRequirements>
+ <Requirement>
+  <ProjectID> 2 </ProjectID>
+  <Name> 2 </Name>
+  <RequirementID> 2222 </RequirementID>
+  <Description-who> 2 </Description-who>
+  <Description-what> 2 </Description-what>
+  <Description-how> 2 </Description-how>
+  <EstimatedHours> 2.0 </EstimatedHours>
+  <Deadline-Day> 2 </Deadline-Day>
+  <Deadline-Month> 2 </Deadline-Month>
+  <Deadline-Year> 2 </Deadline-Year>
+  <OrderNum> 2 </OrderNum>
+ </Requirement>
+</RequirementList>

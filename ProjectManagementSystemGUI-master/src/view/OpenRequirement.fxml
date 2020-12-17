@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="423.0" prefWidth="604.0" spacing="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.OpenRequirementController">
+    <children>
+        <Label alignment="CENTER" prefHeight="27.0" prefWidth="602.0" text="Requirement" textAlignment="CENTER">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Label>
+        <HBox prefHeight="36.0" prefWidth="600.0">
+            <children>
+                <Label alignment="CENTER" prefHeight="49.0" prefWidth="150.0" text="Project ID" textAlignment="CENTER">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="projectID" prefHeight="26.0" prefWidth="328.0">
+                    <HBox.margin>
+                        <Insets top="5.0" />
+                    </HBox.margin>
+                </TextField>
+                <Label alignment="CENTER" prefHeight="49.0" prefWidth="150.0" text="Not editable" textAlignment="CENTER">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+            </children>
+        </HBox>
+        <HBox prefHeight="36.0" prefWidth="600.0">
+            <children>
+                <Label alignment="CENTER" prefHeight="49.0" prefWidth="150.0" text="Requirement ID" textAlignment="CENTER">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="requirementID" prefHeight="26.0" prefWidth="328.0">
+                    <HBox.margin>
+                        <Insets top="5.0" />
+                    </HBox.margin>
+                </TextField>
+                <Label alignment="CENTER" prefHeight="49.0" prefWidth="150.0" text="Not editable" textAlignment="CENTER">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+            </children>
+        </HBox>
+        <HBox prefHeight="36.0" prefWidth="600.0">
+            <children>
+                <Label alignment="CENTER" prefHeight="49.0" prefWidth="150.0" text="Name" textAlignment="CENTER">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="name" prefHeight="26.0" prefWidth="437.0">
+                    <HBox.margin>
+                        <Insets top="5.0" />
+                    </HBox.margin>
+                </TextField>
+            </children>
+        </HBox>
+        <HBox prefHeight="36.0" prefWidth="600.0" spacing="10.0">
+            <children>
+                <Label alignment="CENTER" prefHeight="49.0" prefWidth="150.0" text="Description" textAlignment="CENTER">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="what" prefHeight="26.0" prefWidth="135.0" />
+                <TextField fx:id="who" prefHeight="26.0" prefWidth="135.0" />
+                <TextField fx:id="how" prefHeight="26.0" prefWidth="135.0" />
+            </children>
+        </HBox>
+        <HBox prefHeight="36.0" prefWidth="600.0">
+            <children>
+                <Label alignment="CENTER" prefHeight="49.0" prefWidth="150.0" text="Estimated Hours" textAlignment="CENTER">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="estimatedHours" prefHeight="26.0" prefWidth="437.0">
+                    <HBox.margin>
+                        <Insets top="5.0" />
+                    </HBox.margin>
+                </TextField>
+            </children>
+        </HBox>
+        <HBox prefHeight="36.0" prefWidth="600.0" spacing="10.0">
+            <children>
+                <Label alignment="CENTER" prefHeight="49.0" prefWidth="150.0" text="Deadline" textAlignment="CENTER">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="Day" prefHeight="26.0" prefWidth="135.0" />
+                <TextField fx:id="Month" prefHeight="26.0" prefWidth="135.0" />
+                <TextField fx:id="Year" prefHeight="26.0" prefWidth="135.0" />
+            </children>
+        </HBox>
+        <HBox fx:id="orderNumTField" prefHeight="36.0" prefWidth="600.0">
+            <children>
+                <Label alignment="CENTER" prefHeight="49.0" prefWidth="150.0" text="Order Number" textAlignment="CENTER">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="orderNum" prefHeight="26.0" prefWidth="437.0">
+                    <HBox.margin>
+                        <Insets top="5.0" />
+                    </HBox.margin>
+                </TextField>
+            </children>
+        </HBox>
+        <HBox prefHeight="100.0" prefWidth="200.0" spacing="25.0">
+            <children>
+                <Button mnemonicParsing="false" onAction="#UptadeBpressed" prefHeight="51.0" prefWidth="206.0" text="Uptade">
+                    <HBox.margin>
+                        <Insets left="85.0" top="5.0" />
+                    </HBox.margin>
+                </Button>
+                <Button mnemonicParsing="false" onAction="#backButtonPressed" prefHeight="51.0" prefWidth="206.0" text="Back">
+                    <HBox.margin>
+                        <Insets top="5.0" />
+                    </HBox.margin>
+                </Button>
+            </children>
+        </HBox>
+        <Label fx:id="errorLabel" alignment="CENTER" prefHeight="23.0" prefWidth="602.0">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+    </children>
+</VBox>
