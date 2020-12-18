@@ -64,8 +64,8 @@ class ProjectTest {
         Assertions.assertEquals(2.5,project.getEstimatedHours());
         project.setEstimatedHours(-1);
         Assertions.assertEquals(2.5,project.getEstimatedHours());
-        project.setEstimatedHours(999999999.5);
-        Assertions.assertEquals(999999999.5,project.getEstimatedHours());
+        project.setEstimatedHours(9.5);
+        Assertions.assertEquals(9.5,project.getEstimatedHours());
     }
 
 

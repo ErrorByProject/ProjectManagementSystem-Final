@@ -32,9 +32,9 @@ class EmailTest {
         Email email = new Email("user","host","domain");
         Email email1 = new Email("U@er","host@","domain@");
         Email email2 = new Email("Us1er","host21","domain115");
-        Assertions.assertEquals("domain",email.getHost());
-        Assertions.assertEquals("wrong format",email1.getHost());
-        Assertions.assertEquals("domain115",email2.getHost());
+        Assertions.assertEquals("domain",email.getDomain());
+        Assertions.assertEquals("wrong email",email1.getHost());
+        Assertions.assertEquals("domain115",email2.getDomain());
     }
 
 
