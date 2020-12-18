@@ -24,6 +24,7 @@
                         <Button fx:id="teamMemberAddButton" mnemonicParsing="false" onAction="#addTeamMemberButtonPressed" prefHeight="31.0" prefWidth="79.0" text="Add" />
                         <Button fx:id="teamMemberRemoveButton" mnemonicParsing="false" onAction="#removeTeamMemberButtonPressed" prefHeight="31.0" prefWidth="79.0" text="Remove" />
                         <Button fx:id="teamMemberDetailsButton" mnemonicParsing="false" onAction="#showTeamMemberDetailsButtonPressed" prefHeight="31.0" prefWidth="79.0" text="Details" />
+                  <Button onAction="#backButtonPressed" mnemonicParsing="false" prefHeight="31.0" prefWidth="79.0" text="Back" />
                     </children>
                     <opaqueInsets>
                         <Insets />
@@ -47,4 +48,3 @@
         <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="49.0" prefWidth="346.0" text="Label" textFill="RED" />
     </children>
 </VBox>
-

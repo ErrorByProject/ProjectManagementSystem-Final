@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"standalone="no"?>
+<RequirementList>
+<NumberOfRequirements>1</NumberOfRequirements>
+ <Requirement>
+  <ProjectID> 123 </ProjectID>
+  <Name> 123 </Name>
+  <RequirementID> 1231 </RequirementID>
+  <Description-who> 123 </Description-who>
+  <Description-what> 123 </Description-what>
+  <Description-how> 123 </Description-how>
+  <EstimatedHours> 123.0 </EstimatedHours>
+  <Deadline-Day> 31 </Deadline-Day>
+  <Deadline-Month> 12 </Deadline-Month>
+  <Deadline-Year> 123 </Deadline-Year>
+  <OrderNum> 123 </OrderNum>
+ <TeamMembers> </TeamMembers>
+ </Requirement>
+</RequirementList>

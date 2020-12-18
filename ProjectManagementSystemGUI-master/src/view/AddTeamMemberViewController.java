@@ -88,7 +88,7 @@ public class AddTeamMemberViewController
                     Role.TEAM_MEMBER);
 
             model.addNewTeamMember(newbie);
-            viewHandler.openView("team");
+            viewHandler.openView("teamList");
         }
         catch (NumberFormatException e)
         {
@@ -102,7 +102,7 @@ public class AddTeamMemberViewController
 
     @FXML private void addTeamMemberCancelButton()
     {
-        viewHandler.openView("team");
+        viewHandler.openView("teamList");
     }
 
 }

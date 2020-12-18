@@ -134,6 +134,8 @@ public class TeamViewController
         Optional<ButtonType> result = alert.showAndWait();
         return ((result.isPresent()) && (result.get() == ButtonType.OK));
     }
-
+    @FXML private void backButtonPressed(){
+        viewHandler.openView("projectlist");
+    }
 }
 

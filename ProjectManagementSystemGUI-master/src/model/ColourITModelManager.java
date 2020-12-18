@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class ColourITModelManager implements ColourITModel {
     private ProjectList projectList;
-    private RequirementList requirementList;
-    private TaskList taskList;
+//    private RequirementList requirementList;
+//    private TaskList taskList;
     private Team team;
 
     public ColourITModelManager()
@@ -105,32 +105,32 @@ public class ColourITModelManager implements ColourITModel {
     }
 
     @Override public Requirement getRequirementByID(String requirementID,String projectID){return projectList.getProjectByID(projectID).getRequirements().getRequirementByID(requirementID);}
-
-    @Override public void editDeadLineOfARequirement(String requirementID, Date newDeadline){requirementList.editDeadLineOfARequirement(requirementID,newDeadline);}
-
-    @Override public void editEstimatedHoursOfARequirement(String requirementID, double estimatedHours){requirementList.editEstimatedHoursOfARequirement(requirementID,estimatedHours);}
-
-    @Override public void editDescriptionOfARequirement(String requirementID, UserStory newDescription){requirementList.editDescriptionOfARequirement(requirementID,newDescription);}
-
-    @Override public Status getRequirementStatus(String requirementID){return requirementList.getRequirementStatus(requirementID);}
-
-    @Override public void assignRequirementOrder(String requirementID, int orderNum){requirementList.assignRequirementOrder(requirementID,orderNum);}
-
-    @Override public int getRequirementsListTotalHoursOfWork(){return requirementList.getRequirementsListTotalHoursOfWork();}
-
-    @Override public ArrayList<Requirement> getFinishedRequirements(){return requirementList.getFinishedRequirements();}
-
-    @Override public ArrayList<Requirement> getActiveRequirements(){return requirementList.getActiveRequirements();}
-
-    @Override public Requirement getRequirementByIndex(int orderNum){return requirementList.getRequirementByIndex(orderNum);}
-
-    @Override public Requirement[] getAllRequirements(){return requirementList.getAllRequirements();}
-
-    @Override public RequirementList getRequirementsSortedByOrderNum(){return requirementList.getRequirementsSortedByOrderNum();}
-
-    @Override public String toString (){return requirementList.toString();}
-
-    @Override public int getRequirementListSize(){return requirementList.getRequirementListSize();}
+//
+//    @Override public void editDeadLineOfARequirement(String requirementID, Date newDeadline){requirementList.editDeadLineOfARequirement(requirementID,newDeadline);}
+//
+//    @Override public void editEstimatedHoursOfARequirement(String requirementID, double estimatedHours){requirementList.editEstimatedHoursOfARequirement(requirementID,estimatedHours);}
+//
+//    @Override public void editDescriptionOfARequirement(String requirementID, UserStory newDescription){requirementList.editDescriptionOfARequirement(requirementID,newDescription);}
+//
+//    @Override public Status getRequirementStatus(String requirementID){return requirementList.getRequirementStatus(requirementID);}
+//
+//    @Override public void assignRequirementOrder(String requirementID, int orderNum){requirementList.assignRequirementOrder(requirementID,orderNum);}
+//
+//    @Override public int getRequirementsListTotalHoursOfWork(){return requirementList.getRequirementsListTotalHoursOfWork();}
+//
+//    @Override public ArrayList<Requirement> getFinishedRequirements(){return requirementList.getFinishedRequirements();}
+//
+//    @Override public ArrayList<Requirement> getActiveRequirements(){return requirementList.getActiveRequirements();}
+//
+//    @Override public Requirement getRequirementByIndex(int orderNum){return requirementList.getRequirementByIndex(orderNum);}
+//
+//    @Override public Requirement[] getAllRequirements(){return requirementList.getAllRequirements();}
+//
+//    @Override public RequirementList getRequirementsSortedByOrderNum(){return requirementList.getRequirementsSortedByOrderNum();}
+//
+//    @Override public String toString (){return requirementList.toString();}
+//
+//    @Override public int getRequirementListSize(){return requirementList.getRequirementListSize();}
     @Override
     public void addTask(Task task,String requirementID,String projectID) {
         getProjectByID(projectID).getRequirements().getRequirementByID(requirementID).getTasks().addTask(task);
@@ -147,15 +147,15 @@ public class ColourITModelManager implements ColourITModel {
         return getProjectByID(projectID).getRequirements().getRequirementByID(requirementID).getTasks().getTaskByID(taskID).getTaskID();
     }
 
-    @Override
-    public int taskListSize() {
-        return taskList.getSize();
-    }
-
-    @Override
-    public Task getTask(int index) {
-        return taskList.getTaskByIndex(index);
-    }
+//    @Override
+//    public int taskListSize() {
+//        return taskList.getSize();
+//    }
+//
+//    @Override
+//    public Task getTask(int index) {
+//        return taskList.getTaskByIndex(index);
+//    }
 
     @Override
     public String getRequirementIDOfTheTask(String taskID,String requirementID,String projectID) {
@@ -276,7 +276,7 @@ public class ColourITModelManager implements ColourITModel {
         return team.getTeamMember(index);
     }
 
-    @Override public Task [] getAllTasks(){
-        return taskList.getAllTasks();
-    }
+//    @Override public Task [] getAllTasks(){
+//        return taskList.getAllTasks();
+//    }
 }

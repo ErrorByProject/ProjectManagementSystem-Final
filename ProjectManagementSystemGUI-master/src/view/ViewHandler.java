@@ -29,6 +29,8 @@ public class ViewHandler
     private SetDescriptionViewController setDescriptionViewController;
     private SetEstimatedHoursViewController setEstimatedHoursViewController;
     private TaskTeamMembersViewController taskTeamMembersViewController;
+    private TeamViewController teamViewController;
+    private AddTeamMemberViewController addTeamMemberViewController;
     private ViewState viewState;
     public ViewHandler(ColourITModel colourITModel)
     {
@@ -102,6 +104,12 @@ public class ViewHandler
                 break;
             case "taskManageTeamMembers":
                 root = loadTaskTeamMembersView("TaskTeamMembersView.fxml",viewState);
+                break;
+            case "teamList":
+                root = loadTeamView("TeamView.fxml");
+                break;
+            case "addTeamMember":
+                root = loadAddTeamMemberView("AddTeamMemberView.fxml");
                 break;
 
         }
@@ -389,6 +397,52 @@ public class ViewHandler
             e.printStackTrace();
         }
         return taskTeamMembersViewController.getRoot();
+    }
+    private Region loadTeamView(String fxmlFile)
+    {
+        if (teamViewController == null)
+        {
+            try
+            {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(fxmlFile));
+                Region root = loader.load();
+                teamViewController = loader.getController();
+                teamViewController.init(this, colourITModel, root);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            teamViewController.reset();
+        }
+        return teamViewController.getRoot();
+    }
+    private Region loadAddTeamMemberView(String fxmlFile)
+    {
+        if (addTeamMemberViewController == null)
+        {
+            try
+            {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(fxmlFile));
+                Region root = loader.load();
+                addTeamMemberViewController = loader.getController();
+                addTeamMemberViewController.init(this, colourITModel, root);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            addTeamMemberViewController.reset();
+        }
+        return addTeamMemberViewController.getRoot();
     }
 }
 

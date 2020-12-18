@@ -26,7 +26,7 @@ public class ProjectListViewController
     @FXML private TableColumn<ProjectViewModel, Status> statusColumn;
     @FXML private TableColumn<ProjectViewModel, Number> hoursSpentColumn;
     @FXML private TableColumn<ProjectViewModel, String> TeamMemberCollum;
-
+    @FXML private TextField searchProjectID;
     @FXML private Label errorLabel;
 
     private Region root;
@@ -45,8 +45,8 @@ public class ProjectListViewController
         this.viewHandler = viewHandler;
         this.root = root;
         this.viewState=viewState;
+        this.errorLabel.setText("");
         this.viewModel = new ProjectListViewModel(model,viewState);
-
         nameColumn
                 .setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
         projectIDColumn.setCellValueFactory(
@@ -71,6 +71,7 @@ public class ProjectListViewController
     public void reset()
     {
         errorLabel.setText("");
+        searchProjectID.setText("");
         viewModel.update();
     }
 
@@ -243,6 +244,24 @@ public class ProjectListViewController
         viewHandler.openView("projects");
     }
 
+    @FXML private void openTeamListButtonPressed(){
+        viewHandler.openView("teamList");
+    }
+    @FXML private void searchButtonPressed(){
+        int counter = 0;
+        for(int i=0;i<model.getAllProjects().length;i++){
+            if(model.getProjectByIndex(i).getProjectID().equals(searchProjectID.getText()) && searchProjectID!=null){
+                viewState.setSelectedProject(searchProjectID.getText());
+                viewHandler.openView("RequirementList");
+                break;
+            }
+            counter++;
+        }
+        if(counter==model.getAllProjects().length){
+            errorLabel.setText("No Project Found");
+        }
+
+    }
     @FXML private void saveBPressed(){
         PrintWriter out = null;
         try {

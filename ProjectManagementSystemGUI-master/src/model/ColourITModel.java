@@ -26,36 +26,36 @@ public interface ColourITModel {
 
     public Requirement getRequirementByID(String requirementID,String projectID);
 
-    public void editDeadLineOfARequirement(String requirementID, Date newDeadline);
+//    public void editDeadLineOfARequirement(String requirementID, Date newDeadline);
+//
+//    public void editEstimatedHoursOfARequirement(String requirementID, double estimatedHours);
+//
+//    public void editDescriptionOfARequirement(String requirementID, UserStory newDescription);
+//
+//    public Status getRequirementStatus(String requirementID);
+//
+//    public void assignRequirementOrder(String requirementID, int orderNum);
+//
+//    public int getRequirementsListTotalHoursOfWork();
 
-    public void editEstimatedHoursOfARequirement(String requirementID, double estimatedHours);
+    //public ArrayList<Requirement> getFinishedRequirements();
 
-    public void editDescriptionOfARequirement(String requirementID, UserStory newDescription);
-
-    public Status getRequirementStatus(String requirementID);
-
-    public void assignRequirementOrder(String requirementID, int orderNum);
-
-    public int getRequirementsListTotalHoursOfWork();
-
-    public ArrayList<Requirement> getFinishedRequirements();
-
-    public ArrayList<Requirement> getActiveRequirements();
-
-    public Requirement getRequirementByIndex(int orderNum);
-
-    public Requirement[] getAllRequirements();
-
-    public int getRequirementListSize();
-
-    public RequirementList getRequirementsSortedByOrderNum();
+//    public ArrayList<Requirement> getActiveRequirements();
+//
+//    public Requirement getRequirementByIndex(int orderNum);
+//
+//    public Requirement[] getAllRequirements();
+//
+//    public int getRequirementListSize();
+//
+//    public RequirementList getRequirementsSortedByOrderNum();
 
     public String toString ();
     public void addTask(Task task,String requirementID,String projectID);
     public void removeTask(String taskID,String requirementID,String projectID);
     public String getTaskID(String taskID,String requirementID,String projectID);
-    public int taskListSize();
-    public Task getTask(int index);
+    //public int taskListSize();
+    //public Task getTask(int index);
     String getRequirementIDOfTheTask(String taskID,String requirementID,String projectID);
     String getLabelNameOfTheTask(String taskID,String requirementID,String projectID);
     String getDescriptionOfTheTask(String taskID,String requirementID,String projectID);
@@ -77,5 +77,5 @@ public interface ColourITModel {
     public ArrayList<TeamMember> getTeamMembersByBirthday(Date date);
     public TeamMember getScrumMaster();
     public TeamMember getProductOwner();
-    public Task[] getAllTasks();
+//    public Task[] getAllTasks();
 }

@@ -297,7 +297,6 @@ public class RequirementListMenuControllerr {
                         Requirement R = new Requirement(ProjectID, RequirementID, name, U,EstimatedHours, D, orderNum);
 
                         R.setTeamMembers(TeamMembers);
-                        System.out.println(R);
                         colourITModel.addRequirement(R,ProjectID);
                         TeamMembers = "";
                         ProjectID = null;
