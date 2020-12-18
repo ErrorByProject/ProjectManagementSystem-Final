@@ -30,18 +30,16 @@ public class OpenRequirementController {
     private Region root;
     private ColourITModel model;
     private ViewHandler viewHandler;
-    private Requirement requirement;
-    private Project project;
+    private ViewState viewState;
     public OpenRequirementController(){
         //
     }
 
-    public void init(ViewHandler viewHandler, ColourITModel model, Region root,Requirement requirement, Project project){
+    public void init(ViewHandler viewHandler, ColourITModel model, Region root,ViewState viewState){
         this.viewHandler = viewHandler;
         this.model = model;
         this.root = root;
-        this.requirement=requirement;
-        this.project= project;
+        this.viewState=viewState;
         load();
     }
 
@@ -63,17 +61,17 @@ public class OpenRequirementController {
 
             this.projectID.setEditable(false);
             this.requirementID.setEditable(false);
-            this.projectID.setText(requirement.getProjectID());
-            this.name.setText(requirement.getName());
-            this.requirementID.setText(requirement.getRequirementID());
-            this.who.setText(requirement.getDescription().getWho());
-            this.what.setText(requirement.getDescription().getWhat());
-            this.how.setText(requirement.getDescription().getHow());
-            this.estimatedHours.setText(requirement.getEstimatedHours()+"");
-            this.Day.setText(requirement.getDeadline().getDay()+"");
-            this.Month.setText(requirement.getDeadline().getMonth()+"");
-            this.Year.setText(requirement.getDeadline().getYear()+"");
-            this.orderNum.setText(requirement.getOrderNum()+"");
+            this.projectID.setText(model.getRequirementByID(viewState.getSelectedRequirement(),viewState.getSelectedProject()).getProjectID());
+            this.name.setText(model.getRequirementByID(viewState.getSelectedRequirement(),viewState.getSelectedProject()).getName());
+            this.requirementID.setText(model.getRequirementByID(viewState.getSelectedRequirement(),viewState.getSelectedProject()).getRequirementID());
+            this.who.setText(model.getRequirementByID(viewState.getSelectedRequirement(),viewState.getSelectedProject()).getDescription().getWho());
+            this.what.setText(model.getRequirementByID(viewState.getSelectedRequirement(),viewState.getSelectedProject()).getDescription().getWhat());
+            this.how.setText(model.getRequirementByID(viewState.getSelectedRequirement(),viewState.getSelectedProject()).getDescription().getHow());
+            this.estimatedHours.setText(model.getRequirementByID(viewState.getSelectedRequirement(),viewState.getSelectedProject()).getEstimatedHours()+"");
+            this.Day.setText(model.getRequirementByID(viewState.getSelectedRequirement(),viewState.getSelectedProject()).getDeadline().getDay()+"");
+            this.Month.setText(model.getRequirementByID(viewState.getSelectedRequirement(),viewState.getSelectedProject()).getDeadline().getMonth()+"");
+            this.Year.setText(model.getRequirementByID(viewState.getSelectedRequirement(),viewState.getSelectedProject()).getDeadline().getYear()+"");
+            this.orderNum.setText(model.getRequirementByID(viewState.getSelectedRequirement(),viewState.getSelectedProject()).getOrderNum()+"");
 
 
 
@@ -91,14 +89,15 @@ public class OpenRequirementController {
 
         try {
 
-            model.removeRequirement(requirementID.getText());
-            project.getRequirementsByImportance().removeRequirement(requirementID.getText());
             UserStory Story = new UserStory(what.getText(), how.getText(), who.getText());
             Date date = new Date(Integer.parseInt(Day.getText()), Integer.parseInt(Month.getText()), Integer.parseInt(Year.getText()));
-            Requirement updatedRequirement = new Requirement(projectID.getText(),requirementID.getText(),name.getText(),Story,Double.parseDouble(estimatedHours.getText()),date,Integer.parseInt(orderNum.getText()));
-            model.addRequirement(updatedRequirement);
-            project.addRequirement(requirement);
-            viewHandler.openView("RequirementList",project);
+            model.getRequirementByID(viewState.getSelectedRequirement(),viewState.getSelectedProject()).setDescription(Story);
+            model.getRequirementByID(viewState.getSelectedRequirement(),viewState.getSelectedProject()).setDeadline(date);
+            model.getRequirementByID(viewState.getSelectedRequirement(),viewState.getSelectedProject()).setName(name.getText());
+            model.getRequirementByID(viewState.getSelectedRequirement(),viewState.getSelectedProject()).setEstimatedHours(Double.parseDouble(estimatedHours.getText()));
+            model.getRequirementByID(viewState.getSelectedRequirement(),viewState.getSelectedProject()).setOrderNum(Integer.parseInt(orderNum.getText()));
+            viewState.setSelectedRequirement("");
+            viewHandler.openView("RequirementList");
 
 
 
@@ -110,7 +109,9 @@ public class OpenRequirementController {
         }
     }
 
-    @FXML private void backButtonPressed(){viewHandler.openView("RequirementList",project);}
+    @FXML private void backButtonPressed(){
+        viewState.setSelectedRequirement("");
+        viewHandler.openView("RequirementList");}
 
 
 }

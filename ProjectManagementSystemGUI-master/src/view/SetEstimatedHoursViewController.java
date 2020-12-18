@@ -14,19 +14,15 @@ public class SetEstimatedHoursViewController {
     private ColourITModel model;
     private ViewHandler viewHandler;
     private Region root;
-    private Task task;
-    private Requirement requirement;
-    private Project project;
+    private ViewState viewState;
     public SetEstimatedHoursViewController(){
 
     }
-    public void init(ViewHandler viewHandler, ColourITModel model, Region root,Task task, Requirement requirement,Project project){
+    public void init(ViewHandler viewHandler, ColourITModel model, Region root,ViewState viewState){
         this.model = model;
         this.viewHandler = viewHandler;
         this.root = root;
-        this.task=task;
-        this.requirement=requirement;
-        this.project=project;
+        this.viewState=viewState;
         reset();
     }
     public void reset(){
@@ -35,9 +31,9 @@ public class SetEstimatedHoursViewController {
         this.newEstimatedHours.setText("");
         this.errorLabel.setText("");
         try{
-            this.taskID.setText(model.getTaskID(task));
+            this.taskID.setText(model.getTaskID(viewState.getSelectedTask(), viewState.getSelectedRequirement(), viewState.getSelectedProject()));
             this.taskID.setEditable(false);
-            this.estimatedHours.setText(model.getEstimatedHoursOfTheTask(task)+"");
+            this.estimatedHours.setText(model.getEstimatedHoursOfTheTask(viewState.getSelectedTask(), viewState.getSelectedRequirement(), viewState.getSelectedProject())+"");
             this.estimatedHours.setEditable(false);
 
         }catch (Exception e){
@@ -48,14 +44,14 @@ public class SetEstimatedHoursViewController {
         return root;
     }
     @FXML private void backButtonPressed(){
-        viewHandler.openView("taskDetails",requirement,project,task);
+        viewHandler.openView("taskDetails");
     }
     @FXML private void submitButtonPressed(){
         errorLabel.setText("");
         try
         {
-            task.setEstimatedHours(Double.parseDouble(newEstimatedHours.getText()));
-            viewHandler.openView("taskDetails",requirement,project,task);
+            model.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByID(viewState.getSelectedRequirement()).getTasks().getTaskByID(viewState.getSelectedTask()).setEstimatedHours(Double.parseDouble(newEstimatedHours.getText()));
+            viewHandler.openView("taskDetails");
         }
         catch (NumberFormatException e)
         {

@@ -30,22 +30,23 @@ public class AddRequirementController {
     private Region root;
     private ColourITModel model;
     private ViewHandler viewHandler;
-    private Project project;
+    private ViewState viewState;
     public AddRequirementController(){
         //
     }
 
-    public void init(ViewHandler viewHandler, ColourITModel model, Region root,Project project){
+    public void init(ViewHandler viewHandler, ColourITModel model, Region root,ViewState viewState){
         this.viewHandler = viewHandler;
         this.model = model;
         this.root = root;
-        this.project=project;
+        this.viewState=viewState;
         reset();
     }
 
     public void reset(){
         this.errorLabel.setText("");
-        this.projectID.setText("");
+        this.projectID.setText(viewState.getSelectedProject());
+        this.projectID.setEditable(false);
         this.requirementID.setText("");
         this.name.setText("");
         this.who.setText("");
@@ -67,9 +68,8 @@ public class AddRequirementController {
             Date date = new Date(Integer.parseInt(Day.getText()), Integer.parseInt(Month.getText()), Integer.parseInt(Year.getText()));
             Requirement R = new Requirement(projectID.getText(), requirementID.getText(), name.getText(), Story,
                     Integer.parseInt(estimatedHours.getText()), date, Integer.parseInt(orderNum.getText()));
-            model.addRequirement(R);
-            project.addRequirement(R);
-            viewHandler.openView("RequirementList",project);
+            model.addRequirement(R,viewState.getSelectedProject());
+            viewHandler.openView("RequirementList");
 
 
         }catch (IllegalArgumentException e){
@@ -80,7 +80,7 @@ public class AddRequirementController {
         }
     }
 
-    @FXML private void backButtonPressed(){viewHandler.openView("RequirementList",project);}
+    @FXML private void backButtonPressed(){viewHandler.openView("RequirementList");}
 
 
 

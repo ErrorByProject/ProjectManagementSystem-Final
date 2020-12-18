@@ -16,19 +16,15 @@ public class EditDeadlineViewController {
     private ColourITModel model;
     private ViewHandler viewHandler;
     private Region root;
-    private Task task;
-    private Project project;
-    private Requirement requirement;
+    private ViewState viewState;
     public EditDeadlineViewController(){
 
     }
-    public void init(ViewHandler viewHandler, ColourITModel model, Region root, Task task,Requirement requirement,Project project){
+    public void init(ViewHandler viewHandler, ColourITModel model, Region root, ViewState viewState){
          this.model = model;
-         this.project = project;
-         this.requirement= requirement;
+         this.viewState=viewState;
         this.viewHandler = viewHandler;
         this.root = root;
-        this.task=task;
         reset();
     }
     public void reset(){
@@ -39,9 +35,9 @@ public class EditDeadlineViewController {
         this.year.setText("");
         this.errorLabel.setText("");
         try{
-            this.taskID.setText(model.getTaskID(task));
+            this.taskID.setText(model.getTaskID(viewState.getSelectedTask(),viewState.getSelectedRequirement(),viewState.getSelectedProject()));
             this.taskID.setEditable(false);
-            this.currentDeadline.setText(model.getDeadlineOfTheTask(task)+"");
+            this.currentDeadline.setText(model.getDeadlineOfTheTask(viewState.getSelectedTask(),viewState.getSelectedRequirement(),viewState.getSelectedProject())+"");
             this.currentDeadline.setEditable(false);
 
         }catch (Exception e){
@@ -52,15 +48,15 @@ public class EditDeadlineViewController {
         return root;
     }
     @FXML private void backButtonPressed(){
-        viewHandler.openView("taskDetails",requirement,project,task);
+        viewHandler.openView("taskDetails");
     }
     @FXML private void submitButtonPressed(){
         errorLabel.setText("");
         try
         {
 
-            task.setDeadline(new Date(Integer.parseInt(day.getText()),Integer.parseInt(month.getText()),Integer.parseInt(year.getText())));
-            viewHandler.openView("taskDetails",requirement,project,task);
+            model.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByID(viewState.getSelectedRequirement()).getTasks().getTaskByID(viewState.getSelectedTask()).setDeadline(new Date(Integer.parseInt(day.getText()),Integer.parseInt(month.getText()),Integer.parseInt(year.getText())));
+            viewHandler.openView("taskDetails");
         }
         catch (NumberFormatException e)
         {

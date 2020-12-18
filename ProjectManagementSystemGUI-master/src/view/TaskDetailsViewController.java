@@ -21,22 +21,18 @@ public class TaskDetailsViewController
     private Region root;
     private ColourITModel model;
     private ViewHandler viewHandler;
-    private Task task;
-    private Requirement requirement;
-    private Project project;
+    private ViewState viewState;
     public TaskDetailsViewController()
     {
         // Called by FXMLLoader
     }
 
-    public void init(ViewHandler viewHandler, ColourITModel model, Region root, Task task,Requirement requirement,Project project)
+    public void init(ViewHandler viewHandler, ColourITModel model, Region root, ViewState viewState)
     {
         this.model = model;
-        this.requirement=requirement;
-        this.project=project;
+        this.viewState=viewState;
         this.viewHandler = viewHandler;
         this.root = root;
-        this.task=task;
         reset();
     }
 
@@ -51,22 +47,22 @@ public class TaskDetailsViewController
         this.deadline.setText("");
         try
         {
-            this.taskID.setText(model.getTaskID(task));
+            this.taskID.setText(model.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByID(viewState.getSelectedRequirement()).getTasks().getTaskByID(viewState.getSelectedTask()).getTaskID());
             this.taskID.setEditable(false);
-            this.requirementID.setText(model.getRequirementIDOfTheTask(task));
+            this.requirementID.setText(model.getRequirementIDOfTheTask(viewState.getSelectedTask(),viewState.getSelectedRequirement(),viewState.getSelectedProject()));
             this.requirementID.setEditable(false);
-            this.labelName.setText(model.getLabelNameOfTheTask(task));
+            this.labelName.setText(model.getLabelNameOfTheTask(viewState.getSelectedTask(),viewState.getSelectedRequirement(),viewState.getSelectedProject()));
             this.labelName.setEditable(false);
             this.requirementID.setEditable(false);
-            this.description.setText(model.getDescriptionOfTheTask(task));
+            this.description.setText(model.getDescriptionOfTheTask(viewState.getSelectedTask(),viewState.getSelectedRequirement(),viewState.getSelectedProject()));
             this.description.setEditable(false);
             this.numberOfTeamMembers.setText(0+"");
             this.numberOfTeamMembers.setEditable(false);
-            this.spentHours.setText(model.getSpentHoursOfTheTask(task)+"");
+            this.spentHours.setText(model.getSpentHoursOfTheTask(viewState.getSelectedTask(),viewState.getSelectedRequirement(),viewState.getSelectedProject())+"");
             this.spentHours.setEditable(false);
-            this.estimatedHours.setText(model.getEstimatedHoursOfTheTask(task)+"");
+            this.estimatedHours.setText(model.getEstimatedHoursOfTheTask(viewState.getSelectedTask(),viewState.getSelectedRequirement(),viewState.getSelectedProject())+"");
             this.estimatedHours.setEditable(false);
-            this.deadline.setText(model.getDeadlineOfTheTask(task)+"");
+            this.deadline.setText(model.getDeadlineOfTheTask(viewState.getSelectedTask(),viewState.getSelectedRequirement(),viewState.getSelectedProject())+"");
             this.deadline.setEditable(false);
             this.errorLabel.setText("");
         }
@@ -81,56 +77,32 @@ public class TaskDetailsViewController
         return root;
     }
 
-    @FXML private void submitButtonPressed(){
-        errorLabel.setText("");
-        try
-        {
-            model.removeTask(task);
-            //project.getRequirements().getRequirement(requirement).getTasks().removeTask(task);
-            model.addTask(task);
-            viewHandler.openView("taskList",requirement,project);
-        }
-        catch (NumberFormatException e)
-        {
-            errorLabel.setText("Illegal " + e.getMessage());
-        }
-        catch (Exception e)
-        {
-            errorLabel.setText(e.getMessage());
-        }
-    }
     @FXML private void backButtonPressed()
     {
-        viewHandler.openView("taskList",requirement,project);
+        viewState.setSelectedTask("");
+        viewHandler.openView("taskList");
     }
     @FXML private void addTimeSpentButtonPressed(){
-        model.removeTask(task);
-        viewHandler.openView("addHoursSpent",requirement,project,task);
+        viewHandler.openView("addHoursSpent");
           }
     @FXML private void editDeadlineButtonPressed(){
-        model.removeTask(task);
-        viewHandler.openView("editDeadline",requirement,project,task);
+        viewHandler.openView("editDeadline");
     };
     @FXML private void setTaskIDButtonPressed(){
-        model.removeTask(task);
-        viewHandler.openView("setTaskID",requirement,project,task);
+        viewHandler.openView("setTaskID");
     }
     @FXML private void setTaskNameButtonPressed(){
-        model.removeTask(task);
-        viewHandler.openView("setTaskName",requirement,project,task);
+        viewHandler.openView("setTaskName");
     }
     @FXML private void setTaskDescriptionButtonPressed(){
-        model.removeTask(task);
-        viewHandler.openView("setTaskDescription",requirement,project,task);
+        viewHandler.openView("setTaskDescription");
     }@FXML private void setEstimatedHoursButtonPressed(){
-    model.removeTask(task);
-    viewHandler.openView("setTaskEstimatedHours",requirement,project,task);
+    viewHandler.openView("setTaskEstimatedHours");
 }
     @FXML private void finishTaskButtonPressed(){
-        model.removeTask(task);
-        task.setStatus(Status.ENDED);
-        model.addTask(task);
-        viewHandler.openView("taskList",requirement,project);
+       model.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByID(viewState.getSelectedRequirement()).getTasks().getTaskByID(viewState.getSelectedTask()).setStatus(Status.ENDED);
+        viewState.setSelectedTask("");
+       viewHandler.openView("taskList");
     }
 }
 

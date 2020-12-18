@@ -8,8 +8,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import model.ColourITModel;
 import model.Project;
-import model.ProjectListModel;
-import model.Requirement;
 
 
 public class ProjectTeamMembersViewController {
@@ -19,25 +17,24 @@ public class ProjectTeamMembersViewController {
     private ColourITModel model;
     private ViewHandler viewHandler;
     private Region root;
-    private Project project;
-
+    private ViewState viewState;
     public ProjectTeamMembersViewController(){
 
     }
-    public void init(ViewHandler viewHandler, ColourITModel model, Region root, Project project){
+    public void init(ViewHandler viewHandler, ColourITModel model, Region root, ViewState viewState){
         this.model = model;
         this.viewHandler = viewHandler;
         this.root = root;
-        this.project = project;
+        this.viewState=viewState;
         reset();
     }
     public void reset(){
         this.ProjectID.setText("");
         this.errorLabel.setText("");
         try{
-            this.ProjectID.setText(project.getProjectID());
+            this.ProjectID.setText(model.getProjectByID(viewState.getSelectedProject()).getProjectID());
             this.ProjectID.setEditable(false);
-            this.teamMemberList.setText(project.getTeamMembers());
+            this.teamMemberList.setText(model.getProjectByID(viewState.getSelectedProject()).getTeamMembers());
 
         }catch (Exception e){
             errorLabel.setText(e.getMessage());
@@ -49,15 +46,14 @@ public class ProjectTeamMembersViewController {
     }
 
     @FXML private void backButtonPressed(){
+        viewState.setSelectedProject("");
         viewHandler.openView("projectlist");
     }
 
     @FXML private void submitButtonPressed() {
         errorLabel.setText("");
         try {
-            model.removeProject(project.getProjectID());
-            project.setTeamMembers(teamMemberList.getText());
-            model.addProject(project);
+            model.getProjectByID(viewState.getSelectedProject()).setTeamMembers(teamMemberList.getText());
             viewHandler.openView("projectlist");
         } catch (NumberFormatException e) {
             errorLabel.setText("Illegal " + e.getMessage());

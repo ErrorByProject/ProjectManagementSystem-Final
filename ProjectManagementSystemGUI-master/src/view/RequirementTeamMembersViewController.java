@@ -16,28 +16,25 @@ public class RequirementTeamMembersViewController {
     private ColourITModel model;
     private ViewHandler viewHandler;
     private Region root;
-    private Requirement requirement;
-    private Project project;
+    private ViewState viewState;
     public RequirementTeamMembersViewController(){
 
     }
 
-    public void init(ViewHandler viewHandler, ColourITModel model, Region root, Requirement requirement, Project project){
+    public void init(ViewHandler viewHandler, ColourITModel model, Region root, ViewState viewState){
         this.model = model;
         this.viewHandler = viewHandler;
         this.root = root;
-        this.requirement=requirement;
-        this.project = project;
+        this.viewState=viewState;
         reset();
     }
     public void reset(){
         this.RequirementID.setText("");
         this.errorLabel.setText("");
         try{
-            this.RequirementID.setText(requirement.getRequirementID());
+            this.RequirementID.setText(model.getRequirementByID(viewState.getSelectedRequirement(),viewState.getSelectedProject()).getRequirementID());
             this.RequirementID.setEditable(false);
-            this.teamMemberList.setText(requirement.getTeamMembers());
-            System.out.println(requirement.getTeamMembers());
+            this.teamMemberList.setText(model.getRequirementByID(viewState.getSelectedRequirement(),viewState.getSelectedProject()).getTeamMembers());
 
         }catch (Exception e){
             errorLabel.setText(e.getMessage());
@@ -47,18 +44,16 @@ public class RequirementTeamMembersViewController {
         return root;
     }
     @FXML private void backButtonPressed(){
-        viewHandler.openView("RequirementList",project);
+        viewState.setSelectedRequirement("");
+        viewHandler.openView("RequirementList");
     }
     @FXML private void submitButtonPressed(){
         errorLabel.setText("");
         try
         {
-            model.removeRequirement(requirement.getRequirementID());
-            project.getRequirementsByImportance().removeRequirement(requirement.getRequirementID());
-            requirement.setTeamMembers(teamMemberList.getText());
-            model.addRequirement(requirement);
-            project.addRequirement(requirement);
-            viewHandler.openView("RequirementList",project);
+            model.getRequirementByID(viewState.getSelectedRequirement(),viewState.getSelectedProject()).setTeamMembers(teamMemberList.getText());
+            viewState.setSelectedRequirement("");
+            viewHandler.openView("RequirementList");
         }
         catch (NumberFormatException e)
         {

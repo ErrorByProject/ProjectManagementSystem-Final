@@ -29,18 +29,16 @@ public class TaskListViewController {
     private ColourITModel model;
     private ViewHandler viewHandler;
     private TaskListViewModel viewModel;
-    private Requirement requirement;
-    private Project project;
+    private ViewState viewState;
     public TaskListViewController(){
 
     }
-    public void init(ViewHandler viewHandler,ColourITModel model, Region root,Requirement requirement,Project project){
+    public void init(ViewHandler viewHandler,ColourITModel model, Region root,ViewState viewState){
         this.model = model;
-        this.requirement=requirement;
-        this.project=project;
+        this.viewState=viewState;
         this.viewHandler=viewHandler;
         this.root=root;
-        this.viewModel=new TaskListViewModel(model);
+        this.viewModel=new TaskListViewModel(model,viewState);
         taskIDColumn.setCellValueFactory(cellData -> cellData.getValue().getTaskIDProperty());
         requirementIDColumn.setCellValueFactory(cellData -> cellData.getValue().getRequirementIDProperty());
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().getLabelNameProperty());
@@ -64,7 +62,7 @@ public class TaskListViewController {
         return root;
     }
     @FXML private void addTaskButtonPressed(){
-        viewHandler.openView("addTask",requirement,project);
+        viewHandler.openView("addTask");
     }
     @FXML private void removeTaskButtonPressed(){
         try
@@ -80,8 +78,7 @@ public class TaskListViewController {
                 Task task = new Task(selectedItem.getTaskIDProperty().get(),
                         selectedItem.getRequirementIDProperty().get(),selectedItem.getLabelNameProperty().get(),selectedItem.getDescriptionProperty().get(),selectedItem.getDeadlineProperty().get(),selectedItem.getEstimatedHoursProperty().get(), Status.STARTED);
                 task.setTeamMembers(selectedItem.getTeamMembersProperty().get());
-                model.removeTask(task);
-                requirement.getTasks().removeTask(task);
+                model.removeTask(selectedItem.getTaskIDProperty().get(),viewState.getSelectedRequirement(),viewState.getSelectedProject());
                 viewModel.remove(task);
                 taskListTable.getSelectionModel().clearSelection();
             }
@@ -117,10 +114,8 @@ public class TaskListViewController {
             boolean open= confirmationOpen();
             if (open)
             {
-                Task task = new Task(selectedItem.getTaskIDProperty().get(), selectedItem.getRequirementIDProperty().get(),
-                        selectedItem.getLabelNameProperty().get(),selectedItem.getDescriptionProperty().get(),selectedItem.getDeadlineProperty().get(),selectedItem.getEstimatedHoursProperty().get(), Status.STARTED);
-                task.setTeamMembers(selectedItem.getTeamMembersProperty().get());
-                viewHandler.openView("taskDetails",requirement,project,task);
+                viewState.setSelectedTask(selectedItem.getTaskIDProperty().get());
+                viewHandler.openView("taskDetails");
                 taskListTable.getSelectionModel().clearSelection();
             }}catch(IllegalArgumentException e){
             errorLabel.setText(e.getMessage());
@@ -136,10 +131,8 @@ public class TaskListViewController {
                     .getSelectedItem();
             if(selectedItem==null){
                 throw new IllegalArgumentException("No item selected");}
-            Task task = new Task(selectedItem.getTaskIDProperty().get(), selectedItem.getRequirementIDProperty().get(),
-                    selectedItem.getLabelNameProperty().get(),selectedItem.getDescriptionProperty().get(),selectedItem.getDeadlineProperty().get(),selectedItem.getEstimatedHoursProperty().get(), Status.STARTED);
-            task.setTeamMembers(selectedItem.getTeamMembersProperty().get());
-            viewHandler.openView("manageTeamMembers",requirement,project,task);
+            viewState.setSelectedTask(selectedItem.getTaskIDProperty().get());
+            viewHandler.openView("taskManageTeamMembers");
             taskListTable.getSelectionModel().clearSelection();
         }catch(IllegalArgumentException e){
             errorLabel.setText(e.getMessage());
@@ -165,33 +158,36 @@ public class TaskListViewController {
     }
 
     @FXML private void backButtonPressed(){
-        viewHandler.openView("RequirementList",project);
+
+        viewState.setSelectedRequirement("");
+        viewHandler.openView("RequirementList");
     }
 
     @FXML private void saveBPressed(){
         PrintWriter out = null;
         try {
-            String pathname = "Task" + project.getProjectID() +".xml"; // instead of 1 should be Project.getId or something to identify the project
+            String pathname = "TaskP" + viewState.getSelectedProject()+"R"+viewState.getSelectedRequirement() +".xml";
             File file = new File(pathname);
             out = new PrintWriter(file);
             String xml = "";
             xml += "<?xml version=\"1.0\" encoding=\"UTF-8\"" + "standalone=\"no\"?>\n";
             xml += "<TaskList>";
-            xml +="\n<NumberOfTasks>" + model.getAllTasks().length + "</NumberOfTasks>";
+            xml +="\n<NumberOfTasks>" + model.getRequirementByID(viewState.getSelectedRequirement(),viewState.getSelectedProject()).getTasks().getSize() + "</NumberOfTasks>";
+            xml +="\n<ProjectID>"+viewState.getSelectedProject()+"</ProjectID>";
 
-            for(int i = 0; i < model.getAllTasks().length; i++){
+            for(int i = 0; i < model.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByID(viewState.getSelectedRequirement()).getTasks().getSize(); i++){
 
 
                 xml += "\n <Task>";
-                xml += "\n  <TaskID> " + model.getTask(i).getTaskID() + " </TaskID>";
-                xml += "\n  <Name> " + model.getTask(i).getLabelName() + " </Name>";
-                xml += "\n  <RequirementID> " + model.getTask(i).getRequirementID() + " </RequirementID>";
-                xml += "\n  <Description> " + model.getTask(i).getDescription() + " </Description>";
-                xml += "\n  <EstimatedHours> " + model.getTask(i).getEstimatedHours() + " </EstimatedHours>";
-                xml += "\n  <Deadline-Day> " + model.getTask(i).getDeadline().getDay() + " </Deadline-Day>";
-                xml += "\n  <Deadline-Month> " + model.getTask(i).getDeadline().getMonth() + " </Deadline-Month>";
-                xml += "\n  <Deadline-Year> " + model.getTask(i).getDeadline().getYear() + " </Deadline-Year>";
-                xml += "\n <TeamMembers>" + model.getTask(i).getTeamMembers() + " </TeamMembers>";
+                xml += "\n  <TaskID> " + model.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByID(viewState.getSelectedRequirement()).getTasks().getTaskByIndex(i).getTaskID() + " </TaskID>";
+                xml += "\n  <Name> " + model.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByID(viewState.getSelectedRequirement()).getTasks().getTaskByIndex(i).getLabelName() + " </Name>";
+                xml += "\n  <RequirementID> " + model.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByID(viewState.getSelectedRequirement()).getTasks().getTaskByIndex(i).getRequirementID() + " </RequirementID>";
+                xml += "\n  <Description> " + model.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByID(viewState.getSelectedRequirement()).getTasks().getTaskByIndex(i).getDescription() + " </Description>";
+                xml += "\n  <EstimatedHours> " + model.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByID(viewState.getSelectedRequirement()).getTasks().getTaskByIndex(i).getEstimatedHours() + " </EstimatedHours>";
+                xml += "\n  <Deadline-Day> " + model.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByID(viewState.getSelectedRequirement()).getTasks().getTaskByIndex(i).getDeadline().getDay() + " </Deadline-Day>";
+                xml += "\n  <Deadline-Month> " + model.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByID(viewState.getSelectedRequirement()).getTasks().getTaskByIndex(i).getDeadline().getMonth() + " </Deadline-Month>";
+                xml += "\n  <Deadline-Year> " + model.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByID(viewState.getSelectedRequirement()).getTasks().getTaskByIndex(i).getDeadline().getYear() + " </Deadline-Year>";
+                xml += "\n <TeamMembers>" + model.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByID(viewState.getSelectedRequirement()).getTasks().getTaskByIndex(i).getTeamMembers() + " </TeamMembers>";
                 xml += "\n </Task>";
 
             }
@@ -201,7 +197,7 @@ public class TaskListViewController {
 
 
         } catch (FileNotFoundException e){
-            e.printStackTrace();
+            errorLabel.setText("Press save button a 2nd time.");
         } finally {
             out.close();
         }
@@ -212,13 +208,13 @@ public class TaskListViewController {
     public void LoadFromMemory(){
 
         try {
-            String pathname = "Task" + project.getProjectID() +".xml"; // instead of 1 should be Project.getId or something to identify the project
+            String pathname = "TaskP" + viewState.getSelectedProject()+"R"+viewState.getSelectedRequirement() +".xml"; // instead of 1 should be Project.getId or something to identify the project
             File file = new File(pathname);
 
             Scanner in = new Scanner(file);
 
 
-
+            String projectID=null;
             String name = null;
             String RequirementID = null;
             String description = null;
@@ -229,9 +225,7 @@ public class TaskListViewController {
             int month  = 0;
             int year = 0;
             String teamMembers = "";
-
             int count = 0;
-
 
             while (in.hasNext()){
                 String line2 = in.nextLine();
@@ -243,7 +237,14 @@ public class TaskListViewController {
 
                 }
             }
-
+            if(in.hasNext()){
+                String line=in.nextLine();
+                if(line.contains("<ProjectID>")){
+                    line=line.replace("<ProjectID>","");
+                    line = line.replace("</ProjectID>","");
+                    projectID=line;
+                }
+            }
             for (int i = 0; i < count; i++){
 
                 while(in.hasNext()){
@@ -298,7 +299,7 @@ public class TaskListViewController {
                         Task T = new Task(TaskId, RequirementID,name,description,D,EstimatedHours,Status.STARTED);
 
                         T.setTeamMembers(teamMembers);
-                        model.addTask(T);
+                        model.addTask(T,RequirementID,projectID);
 
                         teamMembers = "";
                         name = null;
@@ -324,7 +325,7 @@ public class TaskListViewController {
 
 
         } catch (FileNotFoundException e){
-            e.printStackTrace();
+            errorLabel.setText("Please press save button.");
         }
 
     }

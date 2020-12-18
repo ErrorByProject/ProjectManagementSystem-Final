@@ -14,19 +14,15 @@ public class SetDescriptionViewController {
     private ColourITModel model;
     private ViewHandler viewHandler;
     private Region root;
-    private Task task;
-    private Requirement requirement;
-    private Project project;
+    private ViewState viewState;
     public SetDescriptionViewController(){
 
     }
-    public void init(ViewHandler viewHandler, ColourITModel model, Region root, Task task,Requirement requirement,Project project){
+    public void init(ViewHandler viewHandler, ColourITModel model, Region root, ViewState viewState){
         this.model = model;
         this.viewHandler = viewHandler;
         this.root = root;
-        this.task=task;
-        this.project=project;
-        this.requirement=requirement;
+        this.viewState=viewState;
         reset();
     }
     public void reset(){
@@ -35,9 +31,9 @@ public class SetDescriptionViewController {
         this.newTaskDescription.setText("");
         this.errorLabel.setText("");
         try{
-            this.taskID.setText(model.getTaskID(task));
+            this.taskID.setText(model.getTaskID(viewState.getSelectedTask(), viewState.getSelectedRequirement(), viewState.getSelectedProject()));
             this.taskID.setEditable(false);
-            this.taskDescription.setText(model.getDescriptionOfTheTask(task)+"");
+            this.taskDescription.setText(model.getDescriptionOfTheTask(viewState.getSelectedTask(), viewState.getSelectedRequirement(), viewState.getSelectedProject())+"");
             this.taskDescription.setEditable(false);
 
         }catch (Exception e){
@@ -48,14 +44,14 @@ public class SetDescriptionViewController {
         return root;
     }
     @FXML private void backButtonPressed(){
-        viewHandler.openView("taskDetails",requirement,project,task);
+        viewHandler.openView("taskDetails");
     }
     @FXML private void submitButtonPressed(){
         errorLabel.setText("");
         try
         {
-            task.setDescription(newTaskDescription.getText());
-            viewHandler.openView("taskDetails",requirement,project,task);
+            model.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByID(viewState.getSelectedRequirement()).getTasks().getTaskByID(viewState.getSelectedTask()).setDescription(newTaskDescription.getText());
+            viewHandler.openView("taskDetails");
         }
         catch (NumberFormatException e)
         {

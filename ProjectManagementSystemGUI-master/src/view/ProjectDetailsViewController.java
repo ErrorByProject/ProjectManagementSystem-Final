@@ -21,19 +21,19 @@ public class ProjectDetailsViewController
     private Region root;
     private ColourITModel model;
     private ViewHandler viewHandler;
-    private Project project;
+    private ViewState viewState;
 
     public ProjectDetailsViewController()
     {
         // Called by FXMLLoader
     }
 
-    public void init(ViewHandler viewHandler, ColourITModel model, Region root, Project project)
+    public void init(ViewHandler viewHandler, ColourITModel model, Region root, ViewState viewState)
     {
         this.model = model;
         this.viewHandler = viewHandler;
         this.root = root;
-        this.project = project;
+        this.viewState=viewState;
         load();
     }
 
@@ -48,13 +48,13 @@ public class ProjectDetailsViewController
         this.year.setText("");
 
         try {
-            this.nameTextField.setText(project.getName());
-            this.projectIDTextField.setText(project.getProjectID());
-            this.descriptionTextField.setText(project.getDescription());
-            this.estimatedHoursTextField.setText(project.getEstimatedHours()+"");
-            this.day.setText(project.getDeadline().getDay()+"");
-            this.month.setText(project.getDeadline().getMonth()+"");
-            this.year.setText(project.getDeadline().getYear()+"");
+            this.nameTextField.setText(model.getProjectByID(viewState.getSelectedProject()).getName());
+            this.projectIDTextField.setText(model.getProjectByID(viewState.getSelectedProject()).getProjectID());
+            this.descriptionTextField.setText(model.getProjectByID(viewState.getSelectedProject()).getDescription());
+            this.estimatedHoursTextField.setText(model.getProjectByID(viewState.getSelectedProject()).getEstimatedHours()+"");
+            this.day.setText(model.getProjectByID(viewState.getSelectedProject()).getDeadline().getDay()+"");
+            this.month.setText(model.getProjectByID(viewState.getSelectedProject()).getDeadline().getMonth()+"");
+            this.year.setText(model.getProjectByID(viewState.getSelectedProject()).getDeadline().getYear()+"");
         } catch (Exception e){
             errorLabel.setText(e.getMessage());
         }
@@ -71,12 +71,7 @@ public class ProjectDetailsViewController
         errorLabel.setText("");
         try
         {
-            model.removeProject(project.getProjectID());
-
-            Project project = new Project(nameTextField.getText(),
-                    projectIDTextField.getText(), descriptionTextField.getText(),
-                    new Date(Integer.parseInt(day.getText()),Integer.parseInt(month.getText()),Integer.parseInt(year.getText())), Double.parseDouble(estimatedHoursTextField.getText()), Status.NOTSTARTED);
-            model.addProject(project);
+            viewState.setSelectedProject("");
             viewHandler.openView("projectlist");
         }
         catch (NumberFormatException e)
@@ -92,6 +87,7 @@ public class ProjectDetailsViewController
 
     @FXML private void backButtonPressed()
     {
+        viewState.setSelectedProject("");
         viewHandler.openView("projectlist");
     }
 

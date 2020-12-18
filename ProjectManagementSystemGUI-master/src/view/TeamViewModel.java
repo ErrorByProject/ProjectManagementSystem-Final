@@ -3,11 +3,7 @@ package view;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.ColourITModel;
-import model.Team;
 import model.TeamMember;
-import model.TeamModel;
-
-import java.util.ArrayList;
 
 public class TeamViewModel
 {

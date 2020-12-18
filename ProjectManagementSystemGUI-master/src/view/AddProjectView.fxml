@@ -22,7 +22,7 @@
         </HBox>
         <Pane prefHeight="346.0" prefWidth="438.0">
             <children>
-                <TextField fx:id="nameTextField" alignment="CENTER" layoutX="82.0" layoutY="23.0" prefHeight="25.0" prefWidth="102.0" promptText="jhjhj" />
+                <TextField fx:id="nameTextField" alignment="CENTER" layoutX="82.0" layoutY="23.0" prefHeight="25.0" prefWidth="102.0" promptText="Name" />
                 <Button layoutX="89.0" layoutY="292.0" mnemonicParsing="false" onAction="#addProjectSubmitButton" text="Submit" textAlignment="CENTER">
                     <font>
                         <Font size="14.0" />
@@ -43,8 +43,8 @@
                         <Font size="16.0" />
                     </font>
                 </Text>
-                <TextField fx:id="projectIDTextField" alignment="CENTER" layoutX="313.0" layoutY="23.0" prefHeight="25.0" prefWidth="64.0" promptText="ro" />
-                <TextField fx:id="descriptionTextField" alignment="CENTER" layoutX="118.0" layoutY="87.0" prefHeight="90.0" prefWidth="250.0" promptText="dst" />
+                <TextField fx:id="projectIDTextField" alignment="CENTER" layoutX="313.0" layoutY="23.0" prefHeight="25.0" prefWidth="64.0" promptText="3 chars" />
+                <TextField fx:id="descriptionTextField" alignment="CENTER" layoutX="118.0" layoutY="87.0" prefHeight="90.0" prefWidth="250.0" promptText="description" />
                 <Text layoutX="24.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description:" wrappingWidth="87.5999755859375">
                     <font>
                         <Font size="16.0" />
@@ -63,7 +63,7 @@
                         <Font size="16.0" />
                     </font>
                 </Text>
-                <TextField fx:id="estimatedHoursTextField" alignment="CENTER" layoutX="157.0" layoutY="240.0" prefHeight="25.0" prefWidth="55.0" promptText="Number" />
+                <TextField fx:id="estimatedHoursTextField" alignment="CENTER" layoutX="157.0" layoutY="240.0" prefHeight="25.0" prefWidth="55.0" promptText="Double" />
                 <Label fx:id="errorLabel" layoutX="199.0" layoutY="292.0">
                     <font>
                         <Font size="18.0" />

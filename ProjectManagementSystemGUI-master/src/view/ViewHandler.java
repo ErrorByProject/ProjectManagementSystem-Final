@@ -32,9 +32,10 @@ public class ViewHandler
     private ViewState viewState;
     public ViewHandler(ColourITModel colourITModel)
     {
-        viewState = new ViewState();
+
         this.colourITModel=colourITModel;
-        currentScene = new Scene(new Region());
+        this.currentScene = new Scene(new Region());
+        this.viewState = new ViewState();
     }
 
     public void start(Stage primaryStage)
@@ -49,118 +50,61 @@ public class ViewHandler
         switch (id)
         {
             case "projectlist":
-                root = loadProjectListView("ProjectListView.fxml");
+                root = loadProjectListView("ProjectListView.fxml",viewState);
                 break;
             case "addProject":
                 root = loadAddProjectView("AddProjectView.fxml");
                 break;
-        }
-        currentScene.setRoot(root);
-        String title = "";
-
-        if (root.getUserData() != null)
-        {
-            title += root.getUserData();
-        }
-        primaryStage.setTitle(title);
-        primaryStage.setScene(currentScene);
-        primaryStage.setWidth(root.getPrefWidth());
-        primaryStage.setHeight(root.getPrefHeight());
-        primaryStage.show();
-    }
-
-    public void openView(String id, Project project)
-    {
-        Region root = null;
-        switch (id)
-        {
             case "ProjectDetails":
-                root = loadProjectDetailsView("DetailsProjectView.fxml", project);
+                root = loadProjectDetailsView("DetailsProjectView.fxml", viewState);
                 break;
-            case "manageTeamMembers":
-                root = labelTeamMembers("ProjectTeamMembersView.fxml",project);
+            case "projectManageTeamMembers":
+                root = labelTeamMembers("ProjectTeamMembersView.fxml",viewState);
                 break;
             case "RequirementList":
-                root = loadRequirementListView("RequirementListMenu.fxml",project);
+                root = loadRequirementListView("RequirementListMenu.fxml",viewState);
                 break;
             case "addRequirement":
-                root = loadAddRequirement("AddRequirementB.fxml",project);
+                root = loadAddRequirement("AddRequirementB.fxml",viewState);
                 break;
-
-        }
-        currentScene.setRoot(root);
-        String title = "";
-        if (root.getUserData() != null)
-        {
-            title += root.getUserData();
-        }
-        primaryStage.setTitle(title);
-        primaryStage.setScene(currentScene);
-        primaryStage.setWidth(root.getPrefWidth());
-        primaryStage.setHeight(root.getPrefHeight());
-        primaryStage.show();
-    }
-    public void openView(String id, Requirement requirement, Project project){
-        Region root = null;
-
-        switch (id){
             case "Open":
-                root = labelOpenRequirement("OpenRequirement.fxml",requirement,project);
+                root = labelOpenRequirement("OpenRequirement.fxml",viewState);
                 break;
-            case "manageTeamMembers":
-                root = labelTeamMebers("RequirementTeamMembersView.fxml",requirement,project);
+            case "requirementManageTeamMembers":
+                root = labelTeamMebers("RequirementTeamMembersView.fxml",viewState);
                 break;
             case "taskList":
-                root = loadTaskListView("TaskListView.fxml",requirement,project);
+                root = loadTaskListView("TaskListView.fxml",viewState);
                 break;
             case "addTask":
-                root = loadAddTaskView("addTaskView.fxml",requirement,project);
+                root = loadAddTaskView("addTaskView.fxml",viewState);
                 break;
-
-        }
-
-        currentScene.setRoot(root);
-        String title = "";
-        if (root.getUserData() != null)
-        {
-            title += root.getUserData();
-        }
-        primaryStage.setTitle(title);
-        primaryStage.setScene(currentScene);
-        primaryStage.setWidth(root.getPrefWidth());
-        primaryStage.setHeight(root.getPrefHeight());
-        primaryStage.show();
-    }
-    public void openView(String id, Requirement requirement, Project project,Task task){
-        Region root = null;
-
-        switch (id) {
             case "taskDetails":
-                root = loadTaskDetailsView("TaskDetailsView.fxml", task,requirement,project);
+                root = loadTaskDetailsView("TaskDetailsView.fxml", viewState);
                 break;
             case "addHoursSpent":
-                root = loadAddTimeSpentView("AddTimeSpentView.fxml",task,requirement,project);
+                root = loadAddTimeSpentView("AddTimeSpentView.fxml",viewState);
                 break;
             case "editDeadline":
-                root = loadEditDeadlineView("EditDeadlineView.fxml",task,requirement,project);
+                root = loadEditDeadlineView("EditDeadlineView.fxml",viewState);
                 break;
             case "setTaskID":
-                root = loadSetTaskIDView("SetTaskIDView.fxml",task,requirement,project);
+                root = loadSetTaskIDView("SetTaskIDView.fxml",viewState);
                 break;
             case "setTaskName":
-                root = loadSetTaskNameView("SetTaskNameView.fxml",task,requirement,project);
+                root = loadSetTaskNameView("SetTaskNameView.fxml",viewState);
                 break;
             case "setTaskDescription":
-                root = loadSetTaskDescriptionView("SetDescriptionView.fxml",task,requirement,project);
+                root = loadSetTaskDescriptionView("SetDescriptionView.fxml",viewState);
                 break;
             case "setTaskEstimatedHours":
-                root = loadSetTaskEstimatedHoursView("SetEstimatedHoursView.fxml",task,requirement,project);
+                root = loadSetTaskEstimatedHoursView("SetEstimatedHoursView.fxml",viewState);
                 break;
-            case "manageTeamMembers":
-                root = loadTaskTeamMembersView("TaskTeamMembersView.fxml",task,requirement,project);
+            case "taskManageTeamMembers":
+                root = loadTaskTeamMembersView("TaskTeamMembersView.fxml",viewState);
                 break;
-        }
 
+        }
         currentScene.setRoot(root);
         String title = "";
         if (root.getUserData() != null)
@@ -178,7 +122,7 @@ public class ViewHandler
         primaryStage.close();
     }
 
-    private Region loadProjectListView(String fxmlFile)
+    private Region loadProjectListView(String fxmlFile,ViewState state)
     {
         if (projectListViewController == null)
         {
@@ -188,7 +132,7 @@ public class ViewHandler
                 loader.setLocation(getClass().getResource(fxmlFile));
                 Region root = loader.load();
                 projectListViewController = loader.getController();
-                projectListViewController.init(this, colourITModel, root);
+                projectListViewController.init(this, colourITModel, root, state);
             }
             catch (Exception e)
             {
@@ -202,7 +146,7 @@ public class ViewHandler
         return projectListViewController.getRoot();
     }
 
-    private Region loadProjectDetailsView(String fxmlFile, Project project)
+    private Region loadProjectDetailsView(String fxmlFile, ViewState state)
     {
         try
         {
@@ -210,7 +154,7 @@ public class ViewHandler
             loader.setLocation(getClass().getResource(fxmlFile));
             Region root = loader.load();
             projectDetailsViewController = loader.getController();
-            projectDetailsViewController.init(this, colourITModel, root, project);
+            projectDetailsViewController.init(this, colourITModel, root, state);
         }
         catch (Exception e)
         {
@@ -243,13 +187,13 @@ public class ViewHandler
         return addProjectViewController.getRoot();
     }
 
-    private Region labelTeamMembers(String fxmlFile, Project project){
+    private Region labelTeamMembers(String fxmlFile, ViewState state){
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource(fxmlFile));
             Region root = loader.load();
             projectTeamMembersViewController = loader.getController();
-            projectTeamMembersViewController.init(this,colourITModel,root, project);
+            projectTeamMembersViewController.init(this,colourITModel,root, state);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -257,14 +201,14 @@ public class ViewHandler
         return projectTeamMembersViewController.getRoot();
 
     }
-    private Region loadRequirementListView(String fxmlFile, Project project){
+    private Region loadRequirementListView(String fxmlFile, ViewState state){
         if(requirementListMenuControllerr==null){
             try {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource(fxmlFile));
                 Region root = loader.load();
                 requirementListMenuControllerr = loader.getController();
-                requirementListMenuControllerr.init(this,colourITModel,root,project);
+                requirementListMenuControllerr.init(this,colourITModel,root, state);
             } catch (Exception e){
                 e.printStackTrace();
         }}else {
@@ -273,14 +217,14 @@ public class ViewHandler
 
         return requirementListMenuControllerr.getRoot();
     }
-    private Region loadAddRequirement(String fxmlFile, Project project){
+    private Region loadAddRequirement(String fxmlFile, ViewState state){
         if(addRequirementController == null){
             try {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource(fxmlFile));
                 Region root = loader.load();
                 addRequirementController = loader.getController();
-                addRequirementController.init(this,colourITModel,root,project);
+                addRequirementController.init(this,colourITModel,root,state);
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -289,13 +233,13 @@ public class ViewHandler
         }
         return addRequirementController.getRoot();
 }
-    private Region labelOpenRequirement(String fxmlFile, Requirement requirement,Project project){
+    private Region labelOpenRequirement(String fxmlFile, ViewState state){
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource(fxmlFile));
             Region root = loader.load();
             openRequirementController = loader.getController();
-            openRequirementController.init(this,colourITModel,root,requirement, project);
+            openRequirementController.init(this,colourITModel,root,state);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -304,13 +248,13 @@ public class ViewHandler
 
     }
 
-    private Region labelTeamMebers(String fxmlFile, Requirement requirement, Project project){
+    private Region labelTeamMebers(String fxmlFile, ViewState state){
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource(fxmlFile));
             Region root = loader.load();
             requirementTeamMembersViewController = loader.getController();
-            requirementTeamMembersViewController.init(this,colourITModel,root,requirement,project);
+            requirementTeamMembersViewController.init(this,colourITModel,root, state);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -318,14 +262,14 @@ public class ViewHandler
         return requirementTeamMembersViewController.getRoot();
 
     }
-    private Region loadTaskListView(String fxmlFile,Requirement requirement,Project project) {
+    private Region loadTaskListView(String fxmlFile,ViewState state) {
         if(taskListViewController==null){
             try {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource(fxmlFile));
                 Region root = loader.load();
                 taskListViewController = loader.getController();
-                taskListViewController.init(this, colourITModel, root,requirement,project);
+                taskListViewController.init(this, colourITModel, root, state);
             } catch (Exception e) {
                 e.printStackTrace();
             }}else{
@@ -335,14 +279,14 @@ public class ViewHandler
 
         return taskListViewController.getRoot();
     }
-    private Region loadAddTaskView(String fxmlFile,Requirement requirement,Project project) {
+    private Region loadAddTaskView(String fxmlFile,ViewState state) {
         if (addTaskViewController == null) {
             try {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource(fxmlFile));
                 Region root = loader.load();
                 addTaskViewController = loader.getController();
-                addTaskViewController.init(this, colourITModel, root,requirement,project);
+                addTaskViewController.init(this, colourITModel, root,state);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -351,96 +295,96 @@ public class ViewHandler
         }
         return addTaskViewController.getRoot();
     }
-    private Region loadTaskDetailsView(String fxmlFile, Task task,Requirement requirement,Project project) {
+    private Region loadTaskDetailsView(String fxmlFile, ViewState state) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource(fxmlFile));
             Region root = loader.load();
             taskDetailsViewController = loader.getController();
-            taskDetailsViewController.init(this, colourITModel, root,task,requirement,project);
+            taskDetailsViewController.init(this, colourITModel, root,state);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return taskDetailsViewController.getRoot();
     }
-    private Region loadAddTimeSpentView(String fxmlFile, Task task,Requirement requirement,Project project) {
+    private Region loadAddTimeSpentView(String fxmlFile, ViewState state) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource(fxmlFile));
             Region root = loader.load();
             addTimeSpentViewController = loader.getController();
-            addTimeSpentViewController.init(this, colourITModel, root,task,requirement,project);
+            addTimeSpentViewController.init(this, colourITModel, root,state);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return addTimeSpentViewController.getRoot();
     }
-    private Region loadEditDeadlineView(String fxmlFile, Task task,Requirement requirement,Project project) {
+    private Region loadEditDeadlineView(String fxmlFile, ViewState state) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource(fxmlFile));
             Region root = loader.load();
             editDeadlineViewController = loader.getController();
-            editDeadlineViewController.init(this, colourITModel, root,task,requirement,project);
+            editDeadlineViewController.init(this, colourITModel, root,state);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return editDeadlineViewController.getRoot();
     }
-    private Region loadSetTaskIDView(String fxmlFile, Task task,Requirement requirement,Project project) {
+    private Region loadSetTaskIDView(String fxmlFile, ViewState state) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource(fxmlFile));
             Region root = loader.load();
             setTaskIDViewController = loader.getController();
-            setTaskIDViewController.init(this, colourITModel, root,task,requirement,project);
+            setTaskIDViewController.init(this, colourITModel, root, state);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return setTaskIDViewController.getRoot();
-    }private Region loadSetTaskNameView(String fxmlFile, Task task,Requirement requirement,Project project) {
+    }private Region loadSetTaskNameView(String fxmlFile, ViewState state) {
     try {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(fxmlFile));
         Region root = loader.load();
         setTaskNameViewController = loader.getController();
-        setTaskNameViewController.init(this, colourITModel, root,task,requirement,project);
+        setTaskNameViewController.init(this, colourITModel, root, state);
     } catch (Exception e) {
         e.printStackTrace();
     }
     return setTaskNameViewController.getRoot();
 }
-    private Region loadSetTaskDescriptionView(String fxmlFile, Task task,Requirement requirement,Project project) {
+    private Region loadSetTaskDescriptionView(String fxmlFile, ViewState state) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource(fxmlFile));
             Region root = loader.load();
             setDescriptionViewController = loader.getController();
-            setDescriptionViewController.init(this, colourITModel, root,task,requirement,project);
+            setDescriptionViewController.init(this, colourITModel, root,state);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return setDescriptionViewController.getRoot();
     }
-    private Region loadSetTaskEstimatedHoursView(String fxmlFile, Task task,Requirement requirement,Project project) {
+    private Region loadSetTaskEstimatedHoursView(String fxmlFile, ViewState state) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource(fxmlFile));
             Region root = loader.load();
             setEstimatedHoursViewController = loader.getController();
-            setEstimatedHoursViewController.init(this, colourITModel, root,task,requirement,project);
+            setEstimatedHoursViewController.init(this, colourITModel, root,state);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return setEstimatedHoursViewController.getRoot();
     }
-    private Region loadTaskTeamMembersView(String fxmlFile, Task task,Requirement requirement,Project project) {
+    private Region loadTaskTeamMembersView(String fxmlFile, ViewState state) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource(fxmlFile));
             Region root = loader.load();
             taskTeamMembersViewController = loader.getController();
-            taskTeamMembersViewController.init(this, colourITModel, root,task,requirement,project);
+            taskTeamMembersViewController.init(this, colourITModel, root,state);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -14,19 +14,15 @@ public class AddTimeSpentViewController {
     private ColourITModel model;
     private ViewHandler viewHandler;
     private Region root;
-    private Task task;
-    private Requirement requirement;
-    private Project project;
+    private ViewState viewState;
     public AddTimeSpentViewController(){
 
     }
-    public void init(ViewHandler viewHandler, ColourITModel model, Region root, Task task,Requirement requirement,Project project){
+    public void init(ViewHandler viewHandler, ColourITModel model, Region root, ViewState viewState){
         this.model = model;
         this.viewHandler = viewHandler;
         this.root = root;
-        this.requirement=requirement;
-        this.project=project;
-        this.task=task;
+        this.viewState=viewState;
         reset();
     }
     public void reset(){
@@ -35,9 +31,9 @@ public class AddTimeSpentViewController {
         this.addHoursSpent.setText("");
         this.errorLabel.setText("");
         try{
-            this.taskID.setText(model.getTaskID(task));
+            this.taskID.setText(model.getTaskID(viewState.getSelectedTask(),viewState.getSelectedRequirement(),viewState.getSelectedProject()));
             this.taskID.setEditable(false);
-            this.hoursSpent.setText(model.getSpentHoursOfTheTask(task)+"");
+            this.hoursSpent.setText(model.getSpentHoursOfTheTask(viewState.getSelectedTask(),viewState.getSelectedRequirement(),viewState.getSelectedProject())+"");
             this.hoursSpent.setEditable(false);
 
         }catch (Exception e){
@@ -48,14 +44,14 @@ public class AddTimeSpentViewController {
         return root;
     }
     @FXML private void backButtonPressed(){
-        viewHandler.openView("taskDetails",requirement,project,task);
+        viewHandler.openView("taskDetails");
     }
     @FXML private void submitButtonPressed(){
         errorLabel.setText("");
         try
         {
-            task.setHoursSpent(Double.parseDouble(addHoursSpent.getText()));
-            viewHandler.openView("taskDetails",requirement,project,task);
+            model.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByID(viewState.getSelectedRequirement()).getTasks().getTaskByID(viewState.getSelectedTask()).setHoursSpent(Double.parseDouble(addHoursSpent.getText()));
+            viewHandler.openView("taskDetails");
         }
         catch (NumberFormatException e)
         {

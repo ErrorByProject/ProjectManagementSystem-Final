@@ -30,17 +30,17 @@ public class RequirementListMenuControllerr {
     private ViewHandler viewHandler;
     private RequirementListViewModel viewModel;
     private ColourITModel colourITModel;
-    private Project project;
+    private ViewState viewState;
     public RequirementListMenuControllerr(){
 
     }
 
-    public void init(ViewHandler viewHandler, ColourITModel colourITModel, Region root, Project project){
+    public void init(ViewHandler viewHandler, ColourITModel colourITModel, Region root, ViewState viewState){
         this.colourITModel = colourITModel;
         this.viewHandler = viewHandler;
         this.root = root;
-        this.viewModel = new RequirementListViewModel(colourITModel);
-        this.project=project;
+        this.viewModel = new RequirementListViewModel(colourITModel,viewState);
+        this.viewState=viewState;
         orderNumCollum.setCellValueFactory(cellData -> cellData.getValue().getOrderNum());
         nameCollum.setCellValueFactory(cellData -> cellData.getValue().getName());
         requirementIDCollum.setCellValueFactory(cellData -> cellData.getValue().getRequirementID());
@@ -64,7 +64,7 @@ public class RequirementListMenuControllerr {
         return root;
     }
 
-    @FXML private void addRequirementBPressed(){viewHandler.openView("addRequirement",project);}
+    @FXML private void addRequirementBPressed(){viewHandler.openView("addRequirement");}
 
     @FXML private void removeRequirementBPressed(){
         errorLabel.setText("");
@@ -79,7 +79,7 @@ public class RequirementListMenuControllerr {
                 Requirement R = new Requirement(selectedItem.getProjectID().get(), selectedItem.getRequirementID().get(), selectedItem.getName().get(),
                         selectedItem.getUserStoryObjectProperty().get(), selectedItem.getEstimatedHours().get(), selectedItem.getDeadlineObjectProperty().get(),
                         selectedItem.getOrderNum().get());
-                colourITModel.removeRequirement(R.getRequirementID());
+                colourITModel.removeRequirement(R.getRequirementID(),viewState.getSelectedProject());
                 viewModel.remove(R);
                 RequirementListTable.getSelectionModel().clearSelection();
             }
@@ -101,12 +101,8 @@ public class RequirementListMenuControllerr {
                 throw new IllegalArgumentException("No item selected");
             }
 
-            Requirement R = new Requirement(selectedItem.getProjectID().get(), selectedItem.getRequirementID().get(), selectedItem.getName().get(),
-                    selectedItem.getUserStoryObjectProperty().get(), selectedItem.getEstimatedHours().get(), selectedItem.getDeadlineObjectProperty().get(),
-                    selectedItem.getOrderNum().get());
-
-
-            viewHandler.openView("Open",R, project);
+            viewState.setSelectedRequirement(selectedItem.getRequirementID().get());
+            viewHandler.openView("Open");
             RequirementListTable.getSelectionModel().clearSelection();
 
         } catch (Exception e){
@@ -124,12 +120,8 @@ public class RequirementListMenuControllerr {
                 throw new IllegalArgumentException("No item selected");
             }
 
-            Requirement R = new Requirement(selectedItem.getProjectID().get(), selectedItem.getRequirementID().get(), selectedItem.getName().get(),
-                    selectedItem.getUserStoryObjectProperty().get(), selectedItem.getEstimatedHours().get(), selectedItem.getDeadlineObjectProperty().get(),
-                    selectedItem.getOrderNum().get());
-
-            R.setTeamMembers(selectedItem.getTeamMembers().get() );
-            viewHandler.openView("manageTeamMembers",R, project);
+            viewState.setSelectedRequirement(selectedItem.getRequirementID().get());
+            viewHandler.openView("requirementManageTeamMembers");
             RequirementListTable.getSelectionModel().clearSelection();
 
         } catch (Exception e){
@@ -139,8 +131,7 @@ public class RequirementListMenuControllerr {
     }
 
     @FXML private void backBPressed(){
-        colourITModel.removeProject(project.getProjectID());
-        colourITModel.addProject(project);
+        viewState.setSelectedProject("");
         viewHandler.openView("projectlist");
         }
        @FXML private void openTaskListButtonPressed(){
@@ -152,13 +143,8 @@ public class RequirementListMenuControllerr {
                {
                    throw new IllegalArgumentException("No item selected");
                }
-
-               Requirement R = new Requirement(selectedItem.getProjectID().get(), selectedItem.getRequirementID().get(), selectedItem.getName().get(),
-                       selectedItem.getUserStoryObjectProperty().get(), selectedItem.getEstimatedHours().get(), selectedItem.getDeadlineObjectProperty().get(),
-                       selectedItem.getOrderNum().get());
-
-
-               viewHandler.openView("taskList",R, project);
+               viewState.setSelectedRequirement(selectedItem.getRequirementID().get());
+               viewHandler.openView("taskList");
                RequirementListTable.getSelectionModel().clearSelection();
 
            } catch (Exception e){
@@ -169,30 +155,30 @@ public class RequirementListMenuControllerr {
     @FXML private void saveBPressed(){
         PrintWriter out = null;
         try {
-            String pathname = "Requirement" + project.getProjectID() +".xml"; // instead of 1 should be Project.getId or something to identify the project
+            String pathname = "Requirement" + viewState.getSelectedProject() +".xml"; // instead of 1 should be Project.getId or something to identify the project
             File file = new File(pathname);
             out = new PrintWriter(file);
             String xml = "";
             xml += "<?xml version=\"1.0\" encoding=\"UTF-8\"" + "standalone=\"no\"?>\n";
             xml += "<RequirementList>";
-            xml +="\n<NumberOfRequirements>" + colourITModel.getRequirementListSize() + "</NumberOfRequirements>";
+            xml +="\n<NumberOfRequirements>" + colourITModel.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementListSize()+ "</NumberOfRequirements>";
 
-            for(int i = 0; i < colourITModel.getRequirementListSize(); i++){
+            for(int i = 0; i < colourITModel.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementListSize(); i++){
 
 
                 xml += "\n <Requirement>";
-                xml += "\n  <ProjectID> " + colourITModel.getRequirementByIndex(i).getProjectID() + " </ProjectID>";
-                xml += "\n  <Name> " + colourITModel.getRequirementByIndex(i).getName() + " </Name>";
-                xml += "\n  <RequirementID> " + colourITModel.getRequirementByIndex(i).getRequirementID() + " </RequirementID>";
-                xml += "\n  <Description-who> " + colourITModel.getRequirementByIndex(i).getDescription().getWho() + " </Description-who>";
-                xml += "\n  <Description-what> " + colourITModel.getRequirementByIndex(i).getDescription().getWho() + " </Description-what>";
-                xml += "\n  <Description-how> " + colourITModel.getRequirementByIndex(i).getDescription().getHow() + " </Description-how>";
-                xml += "\n  <EstimatedHours> " + colourITModel.getRequirementByIndex(i).getEstimatedHours() + " </EstimatedHours>";
-                xml += "\n  <Deadline-Day> " + colourITModel.getRequirementByIndex(i).getDeadline().getDay() + " </Deadline-Day>";
-                xml += "\n  <Deadline-Month> " + colourITModel.getRequirementByIndex(i).getDeadline().getMonth() + " </Deadline-Month>";
-                xml += "\n  <Deadline-Year> " + colourITModel.getRequirementByIndex(i).getDeadline().getYear() + " </Deadline-Year>";
-                xml += "\n  <OrderNum> " +colourITModel.getRequirementByIndex(i).getOrderNum()+ " </OrderNum>";
-                xml += "\n <TeamMembers>" + colourITModel.getProjectByIndex(i).getTeamMembers() + " </TeamMembers>";
+                xml += "\n  <ProjectID> " + colourITModel.getProjectByID(viewState.getSelectedProject()).getProjectID() + " </ProjectID>";
+                xml += "\n  <Name> " + colourITModel.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByIndex(i).getName() + " </Name>";
+                xml += "\n  <RequirementID> " + colourITModel.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByIndex(i).getRequirementID() + " </RequirementID>";
+                xml += "\n  <Description-who> " + colourITModel.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByIndex(i).getDescription().getWho() + " </Description-who>";
+                xml += "\n  <Description-what> " + colourITModel.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByIndex(i).getDescription().getWho() + " </Description-what>";
+                xml += "\n  <Description-how> " + colourITModel.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByIndex(i).getDescription().getHow() + " </Description-how>";
+                xml += "\n  <EstimatedHours> " + colourITModel.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByIndex(i).getEstimatedHours() + " </EstimatedHours>";
+                xml += "\n  <Deadline-Day> " + colourITModel.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByIndex(i).getDeadline().getDay() + " </Deadline-Day>";
+                xml += "\n  <Deadline-Month> " + colourITModel.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByIndex(i).getDeadline().getMonth() + " </Deadline-Month>";
+                xml += "\n  <Deadline-Year> " + colourITModel.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByIndex(i).getDeadline().getYear() + " </Deadline-Year>";
+                xml += "\n  <OrderNum> " +colourITModel.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByIndex(i).getOrderNum()+ " </OrderNum>";
+                xml += "\n <TeamMembers>" + colourITModel.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByIndex(i).getTeamMembers() + " </TeamMembers>";
                 xml += "\n </Requirement>";
 
             }
@@ -213,7 +199,7 @@ public class RequirementListMenuControllerr {
     public void LoadFromMemory(){
 
         try {
-            String pathname = "Requirement" + project.getProjectID() +".xml"; // instead of 1 should be Project.getId or something to identify the project
+            String pathname = "Requirement" + viewState.getSelectedProject() +".xml"; // instead of 1 should be Project.getId or something to identify the project
             File file = new File(pathname);
 
             Scanner in = new Scanner(file);
@@ -311,8 +297,8 @@ public class RequirementListMenuControllerr {
                         Requirement R = new Requirement(ProjectID, RequirementID, name, U,EstimatedHours, D, orderNum);
 
                         R.setTeamMembers(TeamMembers);
-                        colourITModel.addRequirement(R);
-
+                        System.out.println(R);
+                        colourITModel.addRequirement(R,ProjectID);
                         TeamMembers = "";
                         ProjectID = null;
                         name = null;

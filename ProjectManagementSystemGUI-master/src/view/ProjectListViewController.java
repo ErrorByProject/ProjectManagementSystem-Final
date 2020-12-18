@@ -33,18 +33,19 @@ public class ProjectListViewController
     private ColourITModel model;
     private ViewHandler viewHandler;
     private ProjectListViewModel viewModel;
-
+    private ViewState viewState;
     public ProjectListViewController()
     {
         // Called by FXMLLoader
     }
 
-    public void init(ViewHandler viewHandler, ColourITModel model, Region root)
+    public void init(ViewHandler viewHandler, ColourITModel model, Region root,ViewState viewState)
     {
         this.model = model;
         this.viewHandler = viewHandler;
         this.root = root;
-        this.viewModel = new ProjectListViewModel(model);
+        this.viewState=viewState;
+        this.viewModel = new ProjectListViewModel(model,viewState);
 
         nameColumn
                 .setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
@@ -103,7 +104,7 @@ public class ProjectListViewController
                         selectedItem.getDeadlineProperty().get(),
                         selectedItem.getEstimatedHoursProperty().get(),
                         selectedItem.getStatusProperty().get());
-                model.removeProject(project.getProjectID());
+                model.removeProject(selectedItem.getProjectIDProperty().get());
                 viewModel.remove(project);
                 projectListTable.getSelectionModel().clearSelection();
             }
@@ -125,15 +126,8 @@ public class ProjectListViewController
             boolean open = confirmationOpen();
             if (open)
             {
-                Project project = new Project(selectedItem.getNameProperty().get(),
-                        selectedItem.getProjectIDProperty().get(),
-                        selectedItem.getDescriptionProperty().get(),
-                        selectedItem.getDeadlineProperty().get(),
-                        selectedItem.getEstimatedHoursProperty().get(),
-                        selectedItem.getStatusProperty().get());
-                project.setRequirementList(selectedItem.getRequirementListObjectProperty().get());
-                project.setTeamMembers(selectedItem.getTeamMembers().get());
-                viewHandler.openView("RequirementList", project);
+                viewState.setSelectedProject(selectedItem.getProjectIDProperty().get());
+                viewHandler.openView("RequirementList");
                 projectListTable.getSelectionModel().clearSelection();
             }
         }
@@ -160,13 +154,8 @@ public class ProjectListViewController
             boolean open = confirmationOpen();
             if (open)
             {
-                Project project = new Project(selectedItem.getNameProperty().get(),
-                        selectedItem.getProjectIDProperty().get(),
-                        selectedItem.getDescriptionProperty().get(),
-                        selectedItem.getDeadlineProperty().get(),
-                        selectedItem.getEstimatedHoursProperty().get(),
-                        selectedItem.getStatusProperty().get());
-                viewHandler.openView("ProjectDetails", project);
+                viewState.setSelectedProject(selectedItem.getProjectIDProperty().get());
+                viewHandler.openView("ProjectDetails");
                 projectListTable.getSelectionModel().clearSelection();
             }
         }
@@ -216,16 +205,8 @@ public class ProjectListViewController
             {
                 throw new IllegalArgumentException("No item selected");
             }
-
-            Project project = new Project(selectedItem.getNameProperty().get(),
-                    selectedItem.getProjectIDProperty().get(),
-                    selectedItem.getDescriptionProperty().get(),
-                    selectedItem.getDeadlineProperty().get(),
-                    selectedItem.getEstimatedHoursProperty().get(),
-                    selectedItem.getStatusProperty().get());
-
-            project.setTeamMembers(selectedItem.getTeamMembers().get());
-            viewHandler.openView("manageTeamMembers",project);
+            viewState.setSelectedProject(selectedItem.getProjectIDProperty().get());
+            viewHandler.openView("projectManageTeamMembers");
             projectListTable.getSelectionModel().clearSelection();
 
         } catch (Exception e){

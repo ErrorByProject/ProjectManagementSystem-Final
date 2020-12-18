@@ -9,7 +9,6 @@ import model.*;
 public class AddTaskViewController
 {
     @FXML private TextField taskIDTextField;
-
     @FXML private TextField requirementIDTextField;
     @FXML private TextField labelNameTextField;
     @FXML private TextField taskDescriptionTextField;
@@ -17,24 +16,21 @@ public class AddTaskViewController
     @FXML private TextField month;
     @FXML private TextField year;
     @FXML private TextField estimatedHoursTextField;
-    @FXML private ChoiceBox<Status> statusChoiceBox;
     @FXML private Label errorLabel;
 
     private Region root;
     private ColourITModel model;
     private ViewHandler viewHandler;
-    private Requirement requirement;
-    private Project project;
+    private ViewState viewState;
     public AddTaskViewController()
     {
         // Called by FXMLLoader
     }
 
-    public void init(ViewHandler viewHandler, ColourITModel model, Region root,Requirement requirement,Project project)
+    public void init(ViewHandler viewHandler, ColourITModel model, Region root,ViewState viewState)
     {
         this.model = model;
-        this.requirement=requirement;
-        this.project=project;
+        this.viewState=viewState;
         this.viewHandler = viewHandler;
         this.root = root;
         reset();
@@ -44,17 +40,14 @@ public class AddTaskViewController
     {
         this.errorLabel.setText("");
         this.taskIDTextField.setText("");
-        this.requirementIDTextField.setText("");
+        this.requirementIDTextField.setText(viewState.getSelectedRequirement());
+        this.requirementIDTextField.setEditable(false);
         this.estimatedHoursTextField.setText("");
         this.labelNameTextField.setText("");
         this.day.setText("");
         this.month.setText("");
         this.year.setText("");
         this.taskDescriptionTextField.setText("");
-        statusChoiceBox = new ChoiceBox<Status>();
-        statusChoiceBox.setItems(FXCollections.observableArrayList(Status.NOTSTARTED,Status.STARTED,Status.ENDED));
-        statusChoiceBox.setTooltip(new Tooltip("Select Task status."));
-        //deadlineDatePicker = new DatePicker();
     }
 
     public Region getRoot()
@@ -67,13 +60,10 @@ public class AddTaskViewController
         errorLabel.setText("");
         try
         {
-            //  LocalDate date = deadlineDatePicker.getValue();
 
             Task task = new Task(taskIDTextField.getText(),requirementIDTextField.getText(),labelNameTextField.getText(),taskDescriptionTextField.getText(),new Date(Integer.parseInt(day.getText()),Integer.parseInt(month.getText()),Integer.parseInt(year.getText())),Double.parseDouble(estimatedHoursTextField.getText()),Status.STARTED );
-            model.addTask(task);
-            project.getRequirements().getRequirementByID(requirement.getRequirementID()).getTasks().addTask(task);
-            viewHandler.openView("taskList",requirement,project);
-            // System.out.println(date);
+            model.addTask(task,viewState.getSelectedRequirement(),viewState.getSelectedProject());
+            viewHandler.openView("taskList");
         }
         catch (NumberFormatException e)
         {
@@ -87,7 +77,7 @@ public class AddTaskViewController
 
     @FXML private void addTaskCancelButtonPressed()
     {
-        viewHandler.openView("taskList",requirement,project);
+        viewHandler.openView("taskList");
     }
 
 

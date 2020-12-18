@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"standalone="no"?>
 <ProjectList>
-<NumberOfProjects>3</NumberOfProjects>
+<NumberOfProjects>2</NumberOfProjects>
  <Project>
   <ProjectID> 222 </ProjectID>
   <Name> 2 </Name>
@@ -12,16 +12,6 @@
  <TeamMembers> </TeamMembers>
  </Project>
  <Project>
-  <ProjectID> 222 </ProjectID>
-  <Name> 2 </Name>
-  <Description> 2 </Description>
-  <EstimatedHours> 2.0 </EstimatedHours>
-  <Deadline-Day> 2 </Deadline-Day>
-  <Deadline-Month> 2 </Deadline-Month>
-  <Deadline-Year> 2 </Deadline-Year>
- <TeamMembers>gay </TeamMembers>
- </Project>
- <Project>
   <ProjectID> 123 </ProjectID>
   <Name> 123 </Name>
   <Description> 123 </Description>
@@ -29,6 +19,6 @@
   <Deadline-Day> 31 </Deadline-Day>
   <Deadline-Month> 12 </Deadline-Month>
   <Deadline-Year> 12312 </Deadline-Year>
- <TeamMembers>null </TeamMembers>
+ <TeamMembers> </TeamMembers>
  </Project>
 </ProjectList>

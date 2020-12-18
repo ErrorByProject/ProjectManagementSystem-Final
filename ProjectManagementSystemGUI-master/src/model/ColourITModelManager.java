@@ -12,8 +12,6 @@ public class ColourITModelManager implements ColourITModel {
     {
         this.team= new Team();
         this.projectList = new ProjectList();
-        this.requirementList=new RequirementList();
-        this.taskList=new TaskList();
     }
 
     @Override public void addProject(Project project)
@@ -100,11 +98,13 @@ public class ColourITModelManager implements ColourITModel {
     {
         return projectList.getProjectDescription(project);
     }
-    @Override public void addRequirement(Requirement requirement){ requirementList.addRequirement(requirement);}
+    @Override public void addRequirement(Requirement requirement,String projectID){ getProjectByID(projectID).getRequirements().addRequirement(requirement);}
 
-    @Override public void removeRequirement(String requirementID){ requirementList.removeRequirement(requirementID);}
+    @Override public void removeRequirement(String requirementID,String projectID){
+    getProjectByID(projectID).getRequirements().removeRequirement(requirementID);
+    }
 
-    @Override public Requirement getRequirementByID(String requirementID){return requirementList.getRequirementByID(requirementID);}
+    @Override public Requirement getRequirementByID(String requirementID,String projectID){return projectList.getProjectByID(projectID).getRequirements().getRequirementByID(requirementID);}
 
     @Override public void editDeadLineOfARequirement(String requirementID, Date newDeadline){requirementList.editDeadLineOfARequirement(requirementID,newDeadline);}
 
@@ -132,28 +132,19 @@ public class ColourITModelManager implements ColourITModel {
 
     @Override public int getRequirementListSize(){return requirementList.getRequirementListSize();}
     @Override
-    public void addTask(Task task) {
-        taskList.addTask(task);
+    public void addTask(Task task,String requirementID,String projectID) {
+        getProjectByID(projectID).getRequirements().getRequirementByID(requirementID).getTasks().addTask(task);
+    }
+
+
+    @Override
+    public void removeTask(String taskID,String requirementID,String projectID) {
+        getProjectByID(projectID).getRequirements().getRequirementByID(requirementID).getTasks().removeTaskByID(taskID);
     }
 
     @Override
-    public void removeTask(String ID) {
-        taskList.removeTaskByID(ID);
-    }
-
-    @Override
-    public void removeTask(Task task) {
-        taskList.removeTask(task);
-    }
-
-    @Override
-    public String getTaskID(Task task) {
-//        for(int i=0;i<taskListSize();i++){
-//            if(taskList.getTaskByIndex(i).equals(task)){
-//                return taskList.getTaskByIndex(i).getTaskID();
-//            }
-//        }
-        return task.getTaskID();
+    public String getTaskID(String taskID,String requirementID,String projectID) {
+        return getProjectByID(projectID).getRequirements().getRequirementByID(requirementID).getTasks().getTaskByID(taskID).getTaskID();
     }
 
     @Override
@@ -167,43 +158,43 @@ public class ColourITModelManager implements ColourITModel {
     }
 
     @Override
-    public String getRequirementIDOfTheTask(Task task) {
-        return task.getRequirementID();
+    public String getRequirementIDOfTheTask(String taskID,String requirementID,String projectID) {
+        return getProjectByID(projectID).getRequirements().getRequirementByID(requirementID).getTasks().getTaskByID(taskID).getRequirementID();
     }
 
     @Override
-    public String getLabelNameOfTheTask(Task task) {
-        return task.getLabelName();
+    public String getLabelNameOfTheTask(String taskID,String requirementID,String projectID) {
+        return getProjectByID(projectID).getRequirements().getRequirementByID(requirementID).getTasks().getTaskByID(taskID).getLabelName();
     }
 
     @Override
-    public String getDescriptionOfTheTask(Task task) {
-        return task.getDescription();
+    public String getDescriptionOfTheTask(String taskID,String requirementID,String projectID) {
+        return getProjectByID(projectID).getRequirements().getRequirementByID(requirementID).getTasks().getTaskByID(taskID).getDescription();
     }
 
     @Override
-    public int getTeamMembersOfTheTask(Task task) {
-        return task.getResponsibleTeamMembers().getAllTeamMembers().size();
+    public int getTeamMembersOfTheTask(String taskID,String requirementID,String projectID) {
+        return getProjectByID(projectID).getRequirements().getRequirementByID(requirementID).getTasks().getTaskByID(taskID).getResponsibleTeamMembers().getAllTeamMembers().size();
     }
 
     @Override
-    public Date getDeadlineOfTheTask(Task task) {
-        return task.getDeadline();
+    public Date getDeadlineOfTheTask(String taskID,String requirementID,String projectID) {
+        return getProjectByID(projectID).getRequirements().getRequirementByID(requirementID).getTasks().getTaskByID(taskID).getDeadline();
     }
 
     @Override
-    public void setDeadline(Task task,int day, int month, int year) {
-        task.setDeadline(new Date(day,month,year));
+    public void setDeadline(int day, int month, int year,String taskID,String requirementID,String projectID) {
+        getProjectByID(projectID).getRequirements().getRequirementByID(requirementID).getTasks().getTaskByID(taskID).setDeadline(new Date(day,month,year));
     }
 
     @Override
-    public double getSpentHoursOfTheTask(Task task) {
-        return task.getTimeSpent();
+    public double getSpentHoursOfTheTask(String taskID,String requirementID,String projectID) {
+        return getProjectByID(projectID).getRequirements().getRequirementByID(requirementID).getTasks().getTaskByID(taskID).getTimeSpent();
     }
 
     @Override
-    public double getEstimatedHoursOfTheTask(Task task) {
-        return task.getEstimatedHours();
+    public double getEstimatedHoursOfTheTask(String taskID,String requirementID,String projectID) {
+        return getProjectByID(projectID).getRequirements().getRequirementByID(requirementID).getTasks().getTaskByID(taskID).getEstimatedHours();
     }
     @Override public int totalNumberOfTeamMembers()
     {

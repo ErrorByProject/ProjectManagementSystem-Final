@@ -4,23 +4,24 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.ColourITModel;
 import model.Requirement;
-import model.RequirementListModel;
 
 public class RequirementListViewModel {
     private ObservableList<RequirementViewModel> list;
     private ColourITModel model;
+    private ViewState viewState;
 
-    public RequirementListViewModel(ColourITModel model){
+    public RequirementListViewModel(ColourITModel model,ViewState viewState){
         this.model = model;
         this.list = FXCollections.observableArrayList();
+        this.viewState=viewState;
         update();
     }
 
     public void update(){
         list.clear();
-        for (int i = 0; i < model.getRequirementListSize(); i++)
+        for (int i = 0; i < model.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementListSize(); i++)
         {
-            list.add(new RequirementViewModel(model.getRequirementByIndex(i)));
+            list.add(new RequirementViewModel(model.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByIndex(i)));
         }
     }
 

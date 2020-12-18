@@ -3,7 +3,6 @@ package view;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.ColourITModel;
-import model.ProjectListModel;
 import model.Project;
 
 public class ProjectListViewModel
@@ -11,7 +10,7 @@ public class ProjectListViewModel
     private ObservableList<ProjectViewModel> list;
     private ColourITModel model;
 
-    public ProjectListViewModel(ColourITModel model)
+    public ProjectListViewModel(ColourITModel model, ViewState viewState)
     {
         this.model = model;
         this.list = FXCollections.observableArrayList();

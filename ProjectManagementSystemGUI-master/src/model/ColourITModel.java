@@ -20,11 +20,11 @@ public interface ColourITModel {
     public String getprojectID(Project project);
     public String getProjectName(Project project);
     public String getProjectDescription(Project project);
-    public void addRequirement(Requirement requirement);
+    public void addRequirement(Requirement requirement,String projectID);
 
-    public void removeRequirement(String requirementID);
+    public void removeRequirement(String requirementID,String projectID);
 
-    public Requirement getRequirementByID(String requirementID);
+    public Requirement getRequirementByID(String requirementID,String projectID);
 
     public void editDeadLineOfARequirement(String requirementID, Date newDeadline);
 
@@ -51,20 +51,19 @@ public interface ColourITModel {
     public RequirementList getRequirementsSortedByOrderNum();
 
     public String toString ();
-    public void addTask(Task task);
-    public void removeTask(String ID);
-    public void removeTask(Task task);
-    public String getTaskID(Task task);
+    public void addTask(Task task,String requirementID,String projectID);
+    public void removeTask(String taskID,String requirementID,String projectID);
+    public String getTaskID(String taskID,String requirementID,String projectID);
     public int taskListSize();
     public Task getTask(int index);
-    String getRequirementIDOfTheTask(Task task);
-    String getLabelNameOfTheTask(Task task);
-    String getDescriptionOfTheTask(Task task);
-    int getTeamMembersOfTheTask(Task task);
-    Date getDeadlineOfTheTask(Task task);
-    void setDeadline(Task task,int day,int month,int year);
-    double getSpentHoursOfTheTask(Task task);
-    double getEstimatedHoursOfTheTask(Task task);
+    String getRequirementIDOfTheTask(String taskID,String requirementID,String projectID);
+    String getLabelNameOfTheTask(String taskID,String requirementID,String projectID);
+    String getDescriptionOfTheTask(String taskID,String requirementID,String projectID);
+    int getTeamMembersOfTheTask(String taskID,String requirementID,String projectID);
+    Date getDeadlineOfTheTask(String taskID,String requirementID,String projectID);
+    void setDeadline(int day,int month,int year,String taskID,String requirementID,String projectID);
+    double getSpentHoursOfTheTask(String taskID,String requirementID,String projectID);
+    double getEstimatedHoursOfTheTask(String taskID,String requirementID,String projectID);
     public void addNewTeamMember(TeamMember teamMember);
     public void removeTeamMemberByID(String teamMemberID);
     public void removeTeamMember(TeamMember teamMember);

@@ -40,14 +40,12 @@ public class RequirementList
                 requirement = requirements.get(i);
             }
         return requirement;
-        //throw new IllegalArgumentException("Invalid ID");
     }
 
     public void editDeadLineOfARequirement(String requirementID, Date newDeadline)
     {
         getRequirementByID(requirementID).setDeadline(newDeadline);
     }
-
     public void editEstimatedHoursOfARequirement(String requirementID,
                                                  double estimatedHours)
     {

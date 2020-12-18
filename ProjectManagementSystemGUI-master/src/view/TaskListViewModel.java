@@ -4,20 +4,21 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.ColourITModel;
 import model.Task;
-import model.TaskListModel;
 
 public class TaskListViewModel {
     private ObservableList<TaskViewModel> list;
     private ColourITModel model;
-    public TaskListViewModel(ColourITModel model){
+    private ViewState viewState;
+    public TaskListViewModel(ColourITModel model,ViewState viewState){
         this.model=model;
         this.list= FXCollections.observableArrayList();
+        this.viewState=viewState;
         update();
     }
     public void update(){
         list.clear();
-        for(int i=0;i< model.taskListSize();i++){
-            list.add(new TaskViewModel( model.getTask(i)));
+        for(int i=0;i< model.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByID(viewState.getSelectedRequirement()).getTasks().getSize();i++){
+            list.add(new TaskViewModel( model.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByID(viewState.getSelectedRequirement()).getTasks().getTaskByIndex(i)));
         }
     }
     public ObservableList<TaskViewModel> getList(){
