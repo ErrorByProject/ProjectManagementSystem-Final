@@ -197,8 +197,8 @@ public class TaskList
      * A method getting the hours spent on a task
      * @return the hours spent
      */
-    public int getHoursSpent(){
-        int hours = 0;
+    public double getHoursSpent(){
+        double hours = 0;
         for(Task i : tasks){
             hours += i.getTimeSpent();
         }

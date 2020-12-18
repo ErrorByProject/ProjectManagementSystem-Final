@@ -92,9 +92,9 @@ public class RequirementList
         getRequirementByID(requirementID).setOrderNum(orderNum);
     }
 
-    public int getRequirementsListTotalHoursOfWork()
+    public double getRequirementsListTotalHoursOfWork()
     {
-        int hours = 0;
+        double hours = 0;
         for (int i = 0; i < requirements.size(); i++)
         {
             hours += requirements.get(i).getSpentHours();

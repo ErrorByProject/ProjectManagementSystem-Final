@@ -370,33 +370,45 @@ public class ProjectListViewController
                         line = line.replace("<Deadline-Year>","");
                         line = line.replace("</Deadline-Year>","");
                         year = Integer.parseInt(line.trim());
-                    } else if(line.contains("<TeamMembers>")){
+                    } else if(line.contains("<TeamMembers>") && line.contains("</TeamMembers>")){
                         line = line.replace("<TeamMembers>","");
                         line = line.replace("</TeamMembers>","");
                         TeamMembers = line.trim();
-                    }
-
-                    if(name!=null && description!=null && !description.equals("") &&
-                            ProjectID != null && !ProjectID.equals("") && ProjectID.length() == 3
-                            &&  day != 0 && month != 0 && year != 0 && EstimatedHours>=0){
-                        Date D = new Date(day,month,year);
-
-
-                        Project P = new Project(name,ProjectID,description,D,EstimatedHours,Status.STARTED);
-                        P.setTeamMembers(TeamMembers);
-                        model.addProject(P);
-                        ProjectID = null;
-                        name = null;
-                        TeamMembers = "";
-
-                        EstimatedHours = 0.0;
-                        day = 0;
-                        month  = 0;
-                        year = 0;
-
+                        break;
+                    } else if(line.contains("TeamMembers>")){
+                        line = line.replace("<TeamMembers>","");
+                        while(!line.contains("</TeamMembers>")&& in.hasNext()){
+                            String los = in.nextLine();
+                            line+="\n"+los;
+                        }
+                        line = line.replace("</TeamMembers>","");
+                        TeamMembers=line.trim();
+                        break;
 
                     }
 
+
+
+
+
+                }
+                if(name!=null && description!=null && !description.equals("") &&
+                        ProjectID != null && !ProjectID.equals("") && ProjectID.length() == 3
+                        &&  day != 0 && month != 0 && year != 0 && EstimatedHours>=0){
+                    Date D = new Date(day,month,year);
+
+
+                    Project P = new Project(name,ProjectID,description,D,EstimatedHours,Status.STARTED);
+                    P.setTeamMembers(TeamMembers);
+                    model.addProject(P);
+                    ProjectID = null;
+                    name = null;
+                    TeamMembers = "";
+
+                    EstimatedHours = 0.0;
+                    day = 0;
+                    month  = 0;
+                    year = 0;
 
 
                 }

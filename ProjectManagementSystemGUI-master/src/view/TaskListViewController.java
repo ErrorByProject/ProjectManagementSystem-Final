@@ -187,9 +187,10 @@ public class TaskListViewController {
                 xml += "\n  <Deadline-Day> " + model.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByID(viewState.getSelectedRequirement()).getTasks().getTaskByIndex(i).getDeadline().getDay() + " </Deadline-Day>";
                 xml += "\n  <Deadline-Month> " + model.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByID(viewState.getSelectedRequirement()).getTasks().getTaskByIndex(i).getDeadline().getMonth() + " </Deadline-Month>";
                 xml += "\n  <Deadline-Year> " + model.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByID(viewState.getSelectedRequirement()).getTasks().getTaskByIndex(i).getDeadline().getYear() + " </Deadline-Year>";
+              //  xml += "\n  <Status> " + model.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByID(viewState.getSelectedRequirement()).getTasks().getTaskByID(viewState.getSelectedTask()).getStatus().toString() + " </Status>";
                 xml += "\n <TeamMembers>" + model.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByID(viewState.getSelectedRequirement()).getTasks().getTaskByIndex(i).getTeamMembers() + " </TeamMembers>";
                 xml += "\n </Task>";
-
+                System.out.println(model.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByID(viewState.getSelectedRequirement()).getTasks().getTaskByIndex(i).getTeamMembers());
             }
             xml += "\n</TaskList>";
             out.println(xml);
@@ -283,49 +284,52 @@ public class TaskListViewController {
                         line = line.replace("<Deadline-Year>","");
                         line = line.replace("</Deadline-Year>","");
                         year = Integer.parseInt(line.trim());
-                    } else if(line.contains("<TeamMembers>")){
+                    } else if(line.contains("<TeamMembers>") && line.contains("</TeamMembers>")){
                         line = line.replace("<TeamMembers>","");
                         line = line.replace("</TeamMembers>","");
                         teamMembers = line.trim();
-                    }
-
-                    if(TaskId!=null && !TaskId.equals("") && RequirementID!=null && !RequirementID.equals("") &&
-                            RequirementID.length()==4 && name!=null && !name.equals("")
-                            && description!=null && !description.equals("") && day != 0 && month != 0 && year != 0
-                         && EstimatedHours>=0 ){
-                        Date D = new Date(day,month,year);
-
-
-                        Task T = new Task(TaskId, RequirementID,name,description,D,EstimatedHours,Status.STARTED);
-
-                        T.setTeamMembers(teamMembers);
-                        model.addTask(T,RequirementID,projectID);
-
-                        teamMembers = "";
-                        name = null;
-                        RequirementID = null;
-
-                        EstimatedHours = 0.0;
-                        day = 0;
-                        month  = 0;
-                        year = 0;
-
+                        break;
+                    } else if(line.contains("TeamMembers>")){
+                        line = line.replace("<TeamMembers>","");
+                            while(!in.nextLine().contains("</Task>")){
+                               String los = in.nextLine();
+                                line+="\n"+los;
+                        }
+                        line = line.replace("</TeamMembers>","");
+                        teamMembers=line.trim();
+                        break;
 
                     }
 
+
+            }
+                if(TaskId!=null && !TaskId.equals("") && RequirementID!=null && !RequirementID.equals("") &&
+                        RequirementID.length()==4 && name!=null && !name.equals("")
+                        && description!=null && !description.equals("") && day != 0 && month != 0 && year != 0
+                        && EstimatedHours>=0 ){
+                    Date D = new Date(day,month,year);
+
+
+                    Task T = new Task(TaskId, RequirementID,name,description,D,EstimatedHours,Status.NOTSTARTED);
+                    T.setTeamMembers(teamMembers);
+                    model.addTask(T,RequirementID,projectID);
+
+                    teamMembers = "";
+                    name = null;
+                    RequirementID = null;
+                    EstimatedHours = 0.0;
+                    day = 0;
+                    month  = 0;
+                    year = 0;
 
 
                 }
 
 
-            }
 
 
-
-
-
-        } catch (FileNotFoundException e){
-            errorLabel.setText("Please press save button.");
+        } }catch (FileNotFoundException e){
+            errorLabel.setText("There is no file to load from.");
         }
 
     }

@@ -166,6 +166,10 @@ public class Task {
         if(newDescription!=null && !newDescription.equals("")){ description=newDescription;
         }}
     public void setTeamMembers(String teamMembers){
+        if(teamMembers!=null && !teamMembers.equals("") && getStatus().equals(Status.NOTSTARTED)){
+            setStatus(Status.STARTED);
+        }
+
         this.teamMembers=teamMembers;
     }
 

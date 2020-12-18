@@ -233,7 +233,7 @@ public class Requirement
      * A method getting the hours spent on the requirement
      * @return the hours spent on the requirement
      */
-    public int getSpentHours(){
+    public double getSpentHours(){
         return taskList.getHoursSpent();
     }
 

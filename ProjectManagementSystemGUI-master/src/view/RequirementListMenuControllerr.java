@@ -282,38 +282,50 @@ public class RequirementListMenuControllerr {
                         line = line.replace("<OrderNum>","");
                         line = line.replace("</OrderNum>","");
                         orderNum = Integer.parseInt(line.trim());
-                    } else if(line.contains("<TeamMembers>")){
+                    } else if(line.contains("<TeamMembers>") && line.contains("</TeamMembers>")){
                         line = line.replace("<TeamMembers>","");
                         line = line.replace("</TeamMembers>","");
                         TeamMembers = line.trim();
-                    }
-
-
-                    if(ProjectID != null && !(ProjectID.equals("")) && RequirementID != null && !(RequirementID.equals("")) &&
-                            RequirementID.length()==4  && name != null && !(name.equals("")) && who !=null && what != null && how != null && EstimatedHours >= 0 &&
-                            day != 0 && month != 0 && year != 0 && orderNum >=0){
-                        Date D = new Date(day,month,year);
-                        UserStory U = new UserStory( who, what, how);
-                        Requirement R = new Requirement(ProjectID, RequirementID, name, U,EstimatedHours, D, orderNum);
-
-                        R.setTeamMembers(TeamMembers);
-                        colourITModel.addRequirement(R,ProjectID);
-                        TeamMembers = "";
-                        ProjectID = null;
-                        name = null;
-                        RequirementID = null;
-                        who = null;
-                        what = null;
-                        how = null;
-                        EstimatedHours = 0.0;
-                        day = 0;
-                        month  = 0;
-                        year = 0;
-                        orderNum = 0;
+                        break;
+                    } else if(line.contains("TeamMembers>")){
+                        line = line.replace("<TeamMembers>","");
+                        while(!line.contains("</TeamMembers>")&& in.hasNext()){
+                            String los = in.nextLine();
+                            line+="\n"+los;
+                        }
+                        line = line.replace("</TeamMembers>","");
+                        TeamMembers=line.trim();
+                        break;
 
                     }
 
 
+
+
+
+
+                }
+                if(ProjectID != null && !(ProjectID.equals("")) && RequirementID != null && !(RequirementID.equals("")) &&
+                        RequirementID.length()==4  && name != null && !(name.equals("")) && who !=null && what != null && how != null && EstimatedHours >= 0 &&
+                        day != 0 && month != 0 && year != 0 && orderNum >=0){
+                    Date D = new Date(day,month,year);
+                    UserStory U = new UserStory( who, what, how);
+                    Requirement R = new Requirement(ProjectID, RequirementID, name, U,EstimatedHours, D, orderNum);
+
+                    R.setTeamMembers(TeamMembers);
+                    colourITModel.addRequirement(R,ProjectID);
+                    TeamMembers = "";
+                    ProjectID = null;
+                    name = null;
+                    RequirementID = null;
+                    who = null;
+                    what = null;
+                    how = null;
+                    EstimatedHours = 0.0;
+                    day = 0;
+                    month  = 0;
+                    year = 0;
+                    orderNum = 0;
 
                 }
 
@@ -325,7 +337,7 @@ public class RequirementListMenuControllerr {
 
 
         } catch (FileNotFoundException e){
-            e.printStackTrace();
+            errorLabel.setText("No file found. Please Create a starting file by pressing Save.");
         }
 
     }

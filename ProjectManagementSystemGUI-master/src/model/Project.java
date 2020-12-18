@@ -76,7 +76,7 @@ public class Project
     /**
      * The method is adding a team to the project
      *
-     * @param team added to the project
+    // * @param team added to the project
      */
  /* public void addATeam(Team team)
   {
@@ -113,7 +113,7 @@ public class Project
      */
     public void setDescription(String description)
     {
-        if(description!=null && description.equals("")){
+        if(description!=null && !description.equals("")){
             this.description = description;}
     }
 
@@ -180,7 +180,7 @@ public class Project
      *
      * @param estimatedHours newHours of work in project
      */
-    public void setEstimatedHours(int estimatedHours)
+    public void setEstimatedHours(double estimatedHours)
     {
         if(estimatedHours>=0){
             this.estimatedHours = estimatedHours;}

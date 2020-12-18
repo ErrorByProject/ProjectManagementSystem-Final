@@ -50,7 +50,9 @@ public class TaskTeamMembersViewController {
         try
         {
             model.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByID(viewState.getSelectedRequirement()).getTasks().getTaskByID(viewState.getSelectedTask()).setTeamMembers(teamMemberList.getText());
-            viewState.setSelectedTask("");
+            if(teamMemberList.getText()!=null && !teamMemberList.getText().equals("")) {
+                model.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByID(viewState.getSelectedRequirement()).getTasks().getTaskByID(viewState.getSelectedTask()).setStatus(Status.STARTED);
+            }viewState.setSelectedTask("");
             viewHandler.openView("taskList");
         }
         catch (NumberFormatException e)
