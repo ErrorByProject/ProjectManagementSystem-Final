@@ -9,6 +9,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import java.awt.*;
 
+/**
+ * @author group 3
+ * @version 1.0
+ */
+
 public class AddRequirementController {
     @FXML private TextField projectID;
     @FXML private TextField requirementID;
@@ -31,10 +36,21 @@ public class AddRequirementController {
     private ColourITModel model;
     private ViewHandler viewHandler;
     private ViewState viewState;
+
+    /**
+     * A 0 argument constructor for the window
+     */
     public AddRequirementController(){
         //
     }
 
+    /**
+     * A initializer method initializing the components
+     * @param viewHandler the view handler
+     * @param model the model
+     * @param root the root
+     * @param viewState the view state
+     */
     public void init(ViewHandler viewHandler, ColourITModel model, Region root,ViewState viewState){
         this.viewHandler = viewHandler;
         this.model = model;
@@ -43,6 +59,9 @@ public class AddRequirementController {
         reset();
     }
 
+    /**
+     * A reset method resetting the tex fields
+     */
     public void reset(){
         this.errorLabel.setText("");
         this.projectID.setText(viewState.getSelectedProject());
@@ -59,8 +78,16 @@ public class AddRequirementController {
         this.orderNum.setText("");
     }
 
+    /**
+     * A method getting the root
+     * @return the root
+     */
     public Region getRoot(){return root;}
 
+    /**
+     * A method for the button adding the requirement
+     *
+     */
     @FXML private void AddBpressed(){
         errorLabel.setText("");
         try {
@@ -80,6 +107,9 @@ public class AddRequirementController {
         }
     }
 
+    /**
+     * A method canceling the process
+     */
     @FXML private void backButtonPressed(){viewHandler.openView("RequirementList");}
 
 

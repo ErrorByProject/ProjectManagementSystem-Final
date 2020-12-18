@@ -66,10 +66,19 @@ public class UserStory
      */
     public String getWho(){return who;}
 
+    /**
+     * A method converting the description to String
+     * @return the string
+     */
     @Override public String toString(){
         return what + " " + how + " " + who;
     }
 
+    /**
+     * A method that compares descriptions
+     * @param obj the new description
+     * @return the result
+     */
     @Override public boolean equals(Object obj){
         if(!(obj instanceof UserStory)){return false;}
         UserStory other = (UserStory) obj;

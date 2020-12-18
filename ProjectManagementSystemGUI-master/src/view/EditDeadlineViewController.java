@@ -6,6 +6,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import model.*;
 
+/**
+ * @author group 3
+ * @version 1.0
+ */
+
 public class EditDeadlineViewController {
     @FXML private TextField taskID;
     @FXML private TextField currentDeadline;
@@ -17,9 +22,20 @@ public class EditDeadlineViewController {
     private ViewHandler viewHandler;
     private Region root;
     private ViewState viewState;
+    /**
+     * A 0 argument constructor for the window
+     */
     public EditDeadlineViewController(){
 
     }
+
+    /**
+     * A initializer initializing the components
+     * @param viewHandler the view handler
+     * @param model the model
+     * @param root the root
+     * @param viewState the view state
+     */
     public void init(ViewHandler viewHandler, ColourITModel model, Region root, ViewState viewState){
          this.model = model;
          this.viewState=viewState;
@@ -27,6 +43,9 @@ public class EditDeadlineViewController {
         this.root = root;
         reset();
     }
+    /**
+     * A reset method resetting the tex fields
+     */
     public void reset(){
         this.taskID.setText("");
         this.currentDeadline.setText("");
@@ -44,12 +63,23 @@ public class EditDeadlineViewController {
             errorLabel.setText(e.getMessage());
         }
     }
+    /**
+     * A method getting the root
+     * @return the root
+     */
     public Region getRoot(){
         return root;
     }
+    /**
+     * A method canceling the process
+     */
     @FXML private void backButtonPressed(){
         viewHandler.openView("taskDetails");
     }
+    /**
+     * A method for the button adding the dedline
+     *
+     */
     @FXML private void submitButtonPressed(){
         errorLabel.setText("");
         try

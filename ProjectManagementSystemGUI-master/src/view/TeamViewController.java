@@ -8,6 +8,10 @@ import model.*;
 
 import java.util.ArrayList;
 import java.util.Optional;
+/**
+ * @author group 3
+ * @version 1.0
+ */
 
 public class TeamViewController
 {
@@ -22,11 +26,21 @@ public class TeamViewController
     private ViewHandler viewHandler;
     private TeamViewModel viewModel;
 
+    /**
+     * A 0 argument constructor for the window
+     */
     public TeamViewController()
     {
         // Called by FXMLLoader
     }
 
+    /**
+     * A initializer initializing the components
+     * @param viewHandler the view handler
+     * @param model the model
+     * @param root the root
+     *
+     */
     public void init(ViewHandler viewHandler, ColourITModel model, Region root)
     {
         this.model = model;
@@ -43,6 +57,9 @@ public class TeamViewController
         teamTable.setItems(viewModel.getList());
     }
 
+    /**
+     * A reset method resetting the tex fields
+     */
     public void reset()
     {
         errorLabel.setText("");
@@ -50,16 +67,26 @@ public class TeamViewController
         viewModel.update();
     }
 
+    /**
+     * A method getting the root
+     * @return the root
+     */
     public Region getRoot()
     {
         return root;
     }
 
+    /**
+     * A method for add team members button
+     */
     @FXML private void addTeamMemberButtonPressed()
     {
         viewHandler.openView("addTeamMember");
     }
 
+    /**
+     * A method for remove team members button
+     */
     @FXML private void removeTeamMemberButtonPressed()
     {
         errorLabel.setText("");
@@ -83,6 +110,10 @@ public class TeamViewController
     }
 
 
+
+    /**
+     * A method for show team members details button
+     */
     @FXML private void showTeamMemberDetailsButtonPressed()
     {
         errorLabel.setText("");
@@ -96,6 +127,10 @@ public class TeamViewController
         }
     }
 
+    /**
+     * A method showing team members
+     * @return the result
+     */
     private boolean details()
     {
         int index = teamTable.getSelectionModel().getSelectedIndex();
@@ -118,6 +153,10 @@ public class TeamViewController
     }
 
 
+    /**
+     * A confirmation window
+     * @return confirmation
+     */
     private boolean confirmation()
     {
         int index = teamTable.getSelectionModel().getSelectedIndex();

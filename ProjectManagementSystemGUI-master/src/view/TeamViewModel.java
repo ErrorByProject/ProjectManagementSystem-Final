@@ -5,11 +5,20 @@ import javafx.collections.ObservableList;
 import model.ColourITModel;
 import model.TeamMember;
 
+/**
+ * @author group 3
+ * @version 1.0
+ */
+
 public class TeamViewModel
 {
     private ObservableList<TeamMemberViewModel> list;
     private ColourITModel model;
 
+    /**
+     * A one argument constructor creating a team view model
+     * @param model the model
+     */
     public TeamViewModel(ColourITModel model)
     {
         this.model = model;
@@ -17,6 +26,9 @@ public class TeamViewModel
         update();
     }
 
+    /**
+     * A update  method updating the tex fields
+     */
     public void update()
     {
         list.clear();
@@ -26,6 +38,10 @@ public class TeamViewModel
         }
     }
 
+    /**
+     * A method getting the team member list
+     * @return list
+     */
     public ObservableList<TeamMemberViewModel> getList()
     {
         return list;
@@ -48,6 +64,10 @@ public class TeamViewModel
         }
     }
 
+    /**
+     * A method adding a team member
+     * @param teamMember
+     */
     public void add(TeamMember teamMember)
     {
         list.add(new TeamMemberViewModel(teamMember));

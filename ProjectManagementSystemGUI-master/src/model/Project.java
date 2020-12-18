@@ -27,7 +27,7 @@ public class Project
     private Status status;
     private String teamMembers;
 
-    // private ArrayList <Team>teamProject;
+
 
     /**
      * Creating a project with all
@@ -57,7 +57,7 @@ public class Project
         }else {
             throw new IllegalArgumentException("wrong input");
         }
-        //this.teamProject = new ArrayList();}
+
     }
 
     /**
@@ -70,18 +70,18 @@ public class Project
         return name;
     }
 
+    /**
+     * A method getting the team members
+     * @return the team members
+     */
     public String getTeamMembers(){return teamMembers;}
 
-    public void setTeamMembers(String teamMembers){this.teamMembers = teamMembers;}
     /**
-     * The method is adding a team to the project
-     *
-     * @param team added to the project
+     * A method setting the team members
+     * @param teamMembers the new team member
      */
- /* public void addATeam(Team team)
-  {
-     teamProject.add(team);
-  }*/
+    public void setTeamMembers(String teamMembers){this.teamMembers = teamMembers;}
+
 
     public void setRequirementList (RequirementList requirementList){
         this.requirementList=requirementList;
@@ -138,10 +138,7 @@ public class Project
         {
             this.projectID = projectID;
         }
-    /*else
-    {
-      throw new IllegalArgumentException("The ID must contain 3 characters");
-    }*/
+
     }
 
     /**

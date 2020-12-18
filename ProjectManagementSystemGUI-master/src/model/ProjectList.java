@@ -228,14 +228,7 @@ public class ProjectList
         Project[] projectList = new Project[projects.size()];
         for (int i = 0; i < projects.size(); i++)
         {
-    /*  if (projects.get(i).getProjectStatus().equals(Status.ENDED))
-      {
-        throw new IllegalArgumentException("No active project");
-      }
-      else
-      {
-        projectList[i] = projects.get(i);
-      }*/
+
             if (!(projects.get(i).getProjectStatus().equals(Status.ENDED)))
             {
                 projectList[i] = projects.get(i);

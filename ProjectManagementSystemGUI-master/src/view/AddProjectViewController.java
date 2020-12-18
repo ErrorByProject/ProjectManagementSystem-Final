@@ -7,6 +7,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import model.*;
 
+/**
+ * @author group 3
+ * @version 1.0
+ */
+
 public class AddProjectViewController
 {
     @FXML private TextField nameTextField;
@@ -24,11 +29,21 @@ public class AddProjectViewController
     private ColourITModel model;
     private ViewHandler viewHandler;
 
+
+    /**
+     * A 0 argument constructor for the window
+     */
     public AddProjectViewController()
     {
         // Called by FXMLLoader
     }
 
+    /**
+     * A initializer method initializing the components
+     * @param viewHandler the view handler
+     * @param model the model
+     * @param root the root
+     */
     public void init(ViewHandler viewHandler, ColourITModel model, Region root)
     {
         this.model = model;
@@ -36,6 +51,9 @@ public class AddProjectViewController
         this.root = root;
     }
 
+    /**
+     * A reset method resetting the tex fields
+     */
     public void reset()
     {
         this.nameTextField.setText("");
@@ -47,11 +65,19 @@ public class AddProjectViewController
         this.year.setText("");
     }
 
+    /**
+     * A method getting the root
+     * @return the root
+     */
     public Region getRoot()
     {
         return root;
     }
 
+    /**
+     * A method for the button adding the project
+     *
+     */
     @FXML private void addProjectSubmitButton()
     {
         errorLabel.setText("");
@@ -72,6 +98,10 @@ public class AddProjectViewController
             errorLabel.setText(e.getMessage());
         }
     }
+
+    /**
+     * A method canceling the process
+     */
     @FXML private void addProjectCancelButton()
     {
         viewHandler.openView("projectlist");

@@ -9,7 +9,10 @@ import javafx.scene.layout.Region;
 import model.ColourITModel;
 import model.Project;
 
-
+/**
+ * @author group 3
+ * @version 1.0
+ */
 public class ProjectTeamMembersViewController {
     @FXML private TextField ProjectID;
     @FXML private Label errorLabel;
@@ -18,9 +21,19 @@ public class ProjectTeamMembersViewController {
     private ViewHandler viewHandler;
     private Region root;
     private ViewState viewState;
+    /**
+     * A 0 argument constructor for the window
+     */
     public ProjectTeamMembersViewController(){
 
     }
+    /**
+     * A initializer method initializing the components
+     * @param viewHandler the view handler
+     * @param model the model
+     * @param root the root
+     * @param viewState the view state
+     */
     public void init(ViewHandler viewHandler, ColourITModel model, Region root, ViewState viewState){
         this.model = model;
         this.viewHandler = viewHandler;
@@ -28,6 +41,9 @@ public class ProjectTeamMembersViewController {
         this.viewState=viewState;
         reset();
     }
+    /**
+     * A reset method resetting the tex fields
+     */
     public void reset(){
         this.ProjectID.setText("");
         this.errorLabel.setText("");
@@ -41,15 +57,26 @@ public class ProjectTeamMembersViewController {
         }
 
     }
+    /**
+     * A method getting the root
+     * @return the root
+     */
     public Region getRoot(){
         return root;
     }
 
+    /**
+     * A method for the back button
+     */
     @FXML private void backButtonPressed(){
         viewState.setSelectedProject("");
         viewHandler.openView("projectlist");
     }
 
+    /**
+     * A method for the button adding the team members
+     *
+     */
     @FXML private void submitButtonPressed() {
         errorLabel.setText("");
         try {

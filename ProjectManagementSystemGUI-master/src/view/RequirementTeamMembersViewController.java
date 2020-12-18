@@ -7,6 +7,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import model.*;
 
+/**
+ * @author group 3
+ * @version 1.0
+ */
 
 public class RequirementTeamMembersViewController {
 
@@ -21,6 +25,13 @@ public class RequirementTeamMembersViewController {
 
     }
 
+    /**
+     * A initializer initializing the components
+     * @param viewHandler the view handler
+     * @param model the model
+     * @param root the root
+     * @param viewState the view state
+     */
     public void init(ViewHandler viewHandler, ColourITModel model, Region root, ViewState viewState){
         this.model = model;
         this.viewHandler = viewHandler;
@@ -28,6 +39,9 @@ public class RequirementTeamMembersViewController {
         this.viewState=viewState;
         reset();
     }
+    /**
+     * A reset method resetting the tex fields
+     */
     public void reset(){
         this.RequirementID.setText("");
         this.errorLabel.setText("");
@@ -40,13 +54,24 @@ public class RequirementTeamMembersViewController {
             errorLabel.setText(e.getMessage());
         }
     }
+    /**
+     * A method getting the root
+     * @return the root
+     */
     public Region getRoot(){
         return root;
     }
+    /**
+     * A method for the back button
+     */
     @FXML private void backButtonPressed(){
         viewState.setSelectedRequirement("");
         viewHandler.openView("RequirementList");
     }
+
+    /**
+     * A method for the submit button that submits team members
+     */
     @FXML private void submitButtonPressed(){
         errorLabel.setText("");
         try
