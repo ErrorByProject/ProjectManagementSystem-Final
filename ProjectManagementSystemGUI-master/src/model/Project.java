@@ -6,9 +6,9 @@ import java.util.ArrayList;
  *
  * @author Nicolae Cernean
  * @version 1.1 2020-12-07
- * @version 1.2 2020-12-10
+ * @version 1.2 2020-12-10 Rokas
  * version 1.2
- * turned off instance variable teamProject cause it's an aray list of aray list of teams?
+ * turned off instance variable teamProject cause it's an array list of array list of teams?
  * deleted addATeam
  * added protections to setters took out exceptions to not crash the project
  * added remove member
