@@ -16,21 +16,40 @@ public class RequirementList
     // private model.Project projectID;
     private ArrayList<Requirement> requirements;
 
+
+    /**
+     * A 0 argument constructor initializing the requirements array
+     */
     public RequirementList()
     {
         this.requirements = new ArrayList<>();
     }
 
+
+    /**
+     * A method adding a requirement to the requirement array
+     * @param requirement the requirement
+     */
     public void addRequirement(Requirement requirement)
     {
         requirements.add(requirement);
     }
 
+
+    /**
+     * A method removing the requirement from the array
+     * @param requirementID the requirement id
+     */
     public void removeRequirement(String requirementID)
     {
         requirements.remove(getRequirementByID(requirementID));
     }
 
+    /**
+     * A method getting the requirement by ID
+     * @param requirementID the requirement Id
+     * @return the requirement
+     */
     public Requirement getRequirementByID(String requirementID)
     {
         Requirement requirement = null;
@@ -42,6 +61,11 @@ public class RequirementList
         return requirement;
     }
 
+    /**
+     * A
+     * @param requirementID
+     * @param newDeadline
+     */
     public void editDeadLineOfARequirement(String requirementID, Date newDeadline)
     {
         getRequirementByID(requirementID).setDeadline(newDeadline);
