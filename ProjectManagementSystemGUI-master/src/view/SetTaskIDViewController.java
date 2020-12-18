@@ -47,6 +47,7 @@ public class SetTaskIDViewController {
         try
         {
             model.getProjectByID(viewState.getSelectedProject()).getRequirements().getRequirementByID(viewState.getSelectedRequirement()).getTasks().getTaskByID(viewState.getSelectedTask()).setTaskID(newTaskID.getText());
+            viewState.setSelectedTask(newTaskID.getText());
             viewHandler.openView("taskDetails");
         }
         catch (IllegalArgumentException e)

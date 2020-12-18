@@ -36,7 +36,7 @@
  <TeamMembers> </TeamMembers>
  </Task>
  <Task>
-  <TaskID> 11234 </TaskID>
+  <TaskID> 1111 </TaskID>
   <Name> 21341 </Name>
   <RequirementID> 1231 </RequirementID>
   <Description> 1234 </Description>
@@ -44,10 +44,6 @@
   <Deadline-Day> 31 </Deadline-Day>
   <Deadline-Month> 12 </Deadline-Month>
   <Deadline-Year> 1234 </Deadline-Year>
- <TeamMembers>123
-123
-123
-123
- </TeamMembers>
+ <TeamMembers> </TeamMembers>
  </Task>
 </TaskList>
