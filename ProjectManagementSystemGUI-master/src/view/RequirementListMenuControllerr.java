@@ -13,6 +13,11 @@ import java.io.PrintWriter;
 import java.util.Optional;
 import java.util.Scanner;
 
+/**
+ * @author group 3
+ * @version 1.0
+ */
+
 public class RequirementListMenuControllerr {
     @FXML private TableView<RequirementViewModel> RequirementListTable;
     @FXML private TableColumn<RequirementViewModel, Number> orderNumCollum;
@@ -31,10 +36,21 @@ public class RequirementListMenuControllerr {
     private RequirementListViewModel viewModel;
     private ColourITModel colourITModel;
     private ViewState viewState;
+
+    /**
+     * A 0 argument constructor for the window
+     */
     public RequirementListMenuControllerr(){
 
     }
 
+    /**
+     * A initializer initializing the components
+     * @param viewHandler the view handler
+     * @param model the model
+     * @param root the root
+     * @param viewState the view state
+     */
     public void init(ViewHandler viewHandler, ColourITModel colourITModel, Region root, ViewState viewState){
         this.colourITModel = colourITModel;
         this.viewHandler = viewHandler;
@@ -55,17 +71,31 @@ public class RequirementListMenuControllerr {
         viewModel.update();
     }
 
+    /**
+     * A reset method resetting the tex fields
+     */
     public void reset(){
         errorLabel.setText("");
         viewModel.update();
     }
 
+    /**
+     * A method getting the root
+     * @return the root
+     */
     public Region getRoot() {
         return root;
     }
 
+
+    /**
+     * A method for add requirement button
+     */
     @FXML private void addRequirementBPressed(){viewHandler.openView("addRequirement");}
 
+    /**
+     * A method for the remove requirement button
+     */
     @FXML private void removeRequirementBPressed(){
         errorLabel.setText("");
         try
@@ -91,6 +121,9 @@ public class RequirementListMenuControllerr {
 
     }
 
+    /**
+     * A method for open requirement button
+     */
     @FXML private void openRequirementBPressed(){
         errorLabel.setText("");
         try {
@@ -110,6 +143,9 @@ public class RequirementListMenuControllerr {
         }
     }
 
+    /**
+     * A method for the manage team members button
+     */
     @FXML private void ManageTeamMemberBPressed(){
         errorLabel.setText("");
         try {
@@ -130,6 +166,9 @@ public class RequirementListMenuControllerr {
 
     }
 
+    /**
+     * A method for the back button
+     */
     @FXML private void backBPressed(){
         viewState.setSelectedProject("");
         viewHandler.openView("projectlist");
@@ -152,6 +191,9 @@ public class RequirementListMenuControllerr {
            }
        }
 
+    /**
+     * A method for the save button pressed
+     */
     @FXML private void saveBPressed(){
         PrintWriter out = null;
         try {
@@ -196,6 +238,9 @@ public class RequirementListMenuControllerr {
 
     }
 
+    /**
+     * A method that loads from the xml file the data
+     */
     public void LoadFromMemory(){
 
         try {

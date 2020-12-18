@@ -13,7 +13,12 @@ import java.io.PrintWriter;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class TaskListViewController {
+/**
+ * @author group 3
+ * @version 1.0
+ */
+
+public class  TaskListViewController {
     @FXML private TableView<TaskViewModel> taskListTable;
     @FXML private TableColumn<TaskViewModel, String > taskIDColumn;
     @FXML private TableColumn<TaskViewModel,String> requirementIDColumn;
@@ -30,9 +35,19 @@ public class TaskListViewController {
     private ViewHandler viewHandler;
     private TaskListViewModel viewModel;
     private ViewState viewState;
+    /**
+     * A 0 argument constructor for the window
+     */
     public TaskListViewController(){
 
     }
+    /**
+     * A initializer method initializing the components
+     * @param viewHandler the view handler
+     * @param model the model
+     * @param root the root
+     * @param viewState the view state
+     */
     public void init(ViewHandler viewHandler,ColourITModel model, Region root,ViewState viewState){
         this.model = model;
         this.viewState=viewState;
@@ -53,17 +68,32 @@ public class TaskListViewController {
         LoadFromMemory();
         viewModel.update();
     }
+    /**
+     * A reset method resetting the tex fields
+     */
     public void reset(){
         errorLabel.setText("");
         viewModel.update();
 
     }
+    /**
+     * A method getting the root
+     * @return the root
+     */
     public Region getRoot(){
         return root;
     }
+
+    /**
+     * A method  fot the add task button
+     */
     @FXML private void addTaskButtonPressed(){
         viewHandler.openView("addTask");
     }
+
+    /**
+     * A method fot the remove task button
+     */
     @FXML private void removeTaskButtonPressed(){
         try
         {
@@ -89,6 +119,11 @@ public class TaskListViewController {
             e.printStackTrace();
         }
     }
+
+    /**
+     * A method for the confirmation
+     * @return confirmation
+     */
     private boolean confirmationRemove(){
         int index = taskListTable.getSelectionModel().getSelectedIndex();
         TaskViewModel selectedItem = taskListTable.getItems().get(index);
@@ -104,6 +139,10 @@ public class TaskListViewController {
         Optional<ButtonType> result = alert.showAndWait();
         return ((result.isPresent()) && (result.get() == ButtonType.OK));
     }
+
+    /**
+     * A method for show task details button
+     */
     @FXML private void showTaskDetailsButtonPressed(){
         try
         {
@@ -124,6 +163,10 @@ public class TaskListViewController {
             e.printStackTrace();
         }
     }
+
+    /**
+     * A method for manage team members button
+     */
     @FXML private void manageTeamMembersButtonPressed(){
         try
         {
@@ -141,6 +184,11 @@ public class TaskListViewController {
             e.printStackTrace();
         }
     }
+
+    /**
+     * A method for the confirmation open
+     * @return confirmation
+     */
     private boolean confirmationOpen(){
         int index = taskListTable.getSelectionModel().getSelectedIndex();
         TaskViewModel selectedItem = taskListTable.getItems().get(index);
@@ -157,12 +205,18 @@ public class TaskListViewController {
         return ((result.isPresent()) && (result.get() == ButtonType.OK));
     }
 
+    /**
+     * A method for the back button
+     */
     @FXML private void backButtonPressed(){
 
         viewState.setSelectedRequirement("");
         viewHandler.openView("RequirementList");
     }
 
+    /**
+     * A method for the save button pressed
+     */
     @FXML private void saveBPressed(){
         PrintWriter out = null;
         try {
@@ -206,6 +260,9 @@ public class TaskListViewController {
 
     }
 
+    /**
+     * A method that loads from the xml file the data
+     */
     public void LoadFromMemory(){
 
         try {

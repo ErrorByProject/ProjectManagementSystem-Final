@@ -6,6 +6,10 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 import model.*;
 
+/**
+ * @author gropup 3
+ * @version 1.0
+ */
 public class AddTaskViewController
 {
     @FXML private TextField taskIDTextField;
@@ -22,11 +26,22 @@ public class AddTaskViewController
     private ColourITModel model;
     private ViewHandler viewHandler;
     private ViewState viewState;
+
+    /**
+     * A 0 argument constructor for the window
+     */
     public AddTaskViewController()
     {
         // Called by FXMLLoader
     }
 
+    /**
+     * A initializer method initializing the components
+     * @param viewHandler the view handler
+     * @param model the model
+     * @param root the root
+     * @param viewState the view state
+     */
     public void init(ViewHandler viewHandler, ColourITModel model, Region root,ViewState viewState)
     {
         this.model = model;
@@ -36,6 +51,9 @@ public class AddTaskViewController
         reset();
     }
 
+    /**
+     * A reset method resetting the tex fields
+     */
     public void reset()
     {
         this.errorLabel.setText("");
@@ -50,11 +68,19 @@ public class AddTaskViewController
         this.taskDescriptionTextField.setText("");
     }
 
+    /**
+     * A method getting the root
+     * @return the root
+     */
     public Region getRoot()
     {
         return root;
     }
 
+    /**
+     * A method for the button adding the task
+     *
+     */
     @FXML private void addTaskSubmitButtonPressed()
     {
         errorLabel.setText("");
@@ -75,6 +101,9 @@ public class AddTaskViewController
         }
     }
 
+    /**
+     * A method canceling the process
+     */
     @FXML private void addTaskCancelButtonPressed()
     {
         viewHandler.openView("taskList");

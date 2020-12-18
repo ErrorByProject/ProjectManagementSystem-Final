@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Changed getTaskBy Id bc it was comparing object with number
  * Changed add task, bc u can't create a task outside a task list
  * Removed 2 illegal exeptions that don't work
- * DON'T FACKING TOUCH IT
+ *
  * @version 1.11 2020-12-11 Rokas
  * changed name from addTask to createTask
  * added protection to createTask
@@ -169,6 +169,11 @@ public class TaskList
             }
         }
     }
+
+    /**
+     * A method removing a task
+     * @param task the task
+     */
     public void removeTask(Task task){
         for(int i=0;i<tasks.size();i++){
             if(tasks.get(i).equals(task)){
@@ -232,6 +237,11 @@ public class TaskList
         }
         return Active;
     }
+
+    /**
+     * A method converting the task list into a string
+     * @return the string
+     */
     @Override
     public String toString (){
         String text="";
@@ -241,6 +251,10 @@ public class TaskList
         return text;
     }
 
+    /**
+     * A method getting all the tasks into an array
+     * @return the array
+     */
     public Task[] getAllTasks()
     {
         Task[] tasks1 = new Task[tasks.size()];

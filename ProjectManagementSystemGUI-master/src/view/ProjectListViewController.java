@@ -14,6 +14,10 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Optional;
 import java.util.Scanner;
+/**
+ * @author group 3
+ * @version 1.0
+ */
 
 public class ProjectListViewController
 {
@@ -34,11 +38,21 @@ public class ProjectListViewController
     private ViewHandler viewHandler;
     private ProjectListViewModel viewModel;
     private ViewState viewState;
+    /**
+     * A 0 argument constructor for the window
+     */
     public ProjectListViewController()
     {
         // Called by FXMLLoader
     }
 
+    /**
+     * A initializer method initializing the components
+     * @param viewHandler the view handler
+     * @param model the model
+     * @param root the root
+     * @param viewState the view state
+     */
     public void init(ViewHandler viewHandler, ColourITModel model, Region root,ViewState viewState)
     {
         this.model = model;
@@ -68,6 +82,9 @@ public class ProjectListViewController
         viewModel.update();
     }
 
+    /**
+     * A reset method resetting the tex fields
+     */
     public void reset()
     {
         errorLabel.setText("");
@@ -75,16 +92,28 @@ public class ProjectListViewController
         viewModel.update();
     }
 
+    /**
+     * A method getting the root
+     * @return the root
+     */
     public Region getRoot()
     {
         return root;
     }
 
+    /**
+     * A method for the button adding the project
+     *
+     */
     @FXML private void addProjectButtonPressed()
     {
         viewHandler.openView("addProject");
     }
 
+    /**
+     * A method for the button removed the project
+     *
+     */
     @FXML private void removeProjectButtonPressed()
     {
         errorLabel.setText("");
@@ -115,6 +144,10 @@ public class ProjectListViewController
             errorLabel.setText("Item not found: " + e.getMessage());
         }
     }
+    /**
+     * A method for the button opening requirement
+     *
+     */
     @FXML private void openRequirementListButtonPressed(){
         try
         {
@@ -142,6 +175,10 @@ public class ProjectListViewController
             e.printStackTrace();
         }
     }
+    /**
+     * A method for showing the details buton
+     *
+     */
     @FXML private void showProjectDetailsButtonPressed()
     {
         try
@@ -173,6 +210,11 @@ public class ProjectListViewController
 
     }
 
+    /**
+     * A method for confirmation window
+     * @return the window
+     */
+
     private boolean confirmation()
     {
         int index = projectListTable.getSelectionModel().getSelectedIndex();
@@ -196,7 +238,9 @@ public class ProjectListViewController
     }
 
 
-
+    /**
+     * A method for the manage team members button
+     */
     @FXML public void projectManageTeamMembers(){
         errorLabel.setText("");
         try {
@@ -217,6 +261,10 @@ public class ProjectListViewController
     }
 
 
+    /**
+     * A method for the open confirmation window
+     * @return the window
+     */
     private boolean confirmationOpen()
     {
         int index = projectListTable.getSelectionModel().getSelectedIndex();
@@ -239,11 +287,18 @@ public class ProjectListViewController
         return ((result.isPresent()) && (result.get() == ButtonType.OK));
     }
 
+    /**
+     * A method returning back
+     */
     @FXML private void backButtonPressed()
     {
         viewHandler.openView("projects");
     }
 
+    /**
+     * A method for the button opening the team list
+     *
+     */
     @FXML private void openTeamListButtonPressed(){
         viewHandler.openView("teamList");
     }
@@ -262,6 +317,10 @@ public class ProjectListViewController
         }
 
     }
+
+    /**
+     * A method for the save button pressed
+     */
     @FXML private void saveBPressed(){
         PrintWriter out = null;
         try {
@@ -304,6 +363,9 @@ public class ProjectListViewController
 
     }
 
+    /**
+     * A method that loads from the xml file the data
+     */
     public void LoadFromMemory(){
 
         try {

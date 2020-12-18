@@ -5,6 +5,10 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import model.*;
+/**
+ * @author group 3
+ * @version 1.0
+ */
 
 public class ViewHandler
 {
@@ -32,6 +36,11 @@ public class ViewHandler
     private TeamViewController teamViewController;
     private AddTeamMemberViewController addTeamMemberViewController;
     private ViewState viewState;
+
+    /**
+     * A 1 argument constructor creating the view handler
+     * @param colourITModel the model
+     */
     public ViewHandler(ColourITModel colourITModel)
     {
 
@@ -40,12 +49,20 @@ public class ViewHandler
         this.viewState = new ViewState();
     }
 
+
+    /**
+     * A method staring the stage
+     */
     public void start(Stage primaryStage)
     {
         this.primaryStage = primaryStage;
         openView("projectlist");
     }
 
+    /**
+     * A method opening the view
+     * @param id
+     */
     public void openView(String id)
     {
         Region root = null;
@@ -125,11 +142,21 @@ public class ViewHandler
         primaryStage.setHeight(root.getPrefHeight());
         primaryStage.show();
     }
+    /**
+     * A method closing the view
+     *
+     */
     public void closeView()
     {
         primaryStage.close();
     }
 
+    /**
+     * A method loading the project list view
+     * @param fxmlFile the file
+     * @param state the state
+     * @return list
+     */
     private Region loadProjectListView(String fxmlFile,ViewState state)
     {
         if (projectListViewController == null)
@@ -154,6 +181,12 @@ public class ViewHandler
         return projectListViewController.getRoot();
     }
 
+    /**
+     * A method loading the project details list view
+     * @param fxmlFile the file
+     * @param state the state
+     * @return list
+     */
     private Region loadProjectDetailsView(String fxmlFile, ViewState state)
     {
         try
@@ -171,6 +204,12 @@ public class ViewHandler
         return projectDetailsViewController.getRoot();
     }
 
+    /**
+     * A method loading the project list view
+     * @param fxmlFile the file
+     *
+     * @return list
+     */
     private Region loadAddProjectView(String fxmlFile)
     {
         if (addProjectViewController == null)
@@ -195,6 +234,12 @@ public class ViewHandler
         return addProjectViewController.getRoot();
     }
 
+    /**
+     * A method loading the team members view
+     * @param fxmlFile the file
+     * @param state the state
+     * @return list
+     */
     private Region labelTeamMembers(String fxmlFile, ViewState state){
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -209,6 +254,12 @@ public class ViewHandler
         return projectTeamMembersViewController.getRoot();
 
     }
+    /**
+     * A method loading the requirement list view
+     * @param fxmlFile the file
+     * @param state the state
+     * @return list
+     */
     private Region loadRequirementListView(String fxmlFile, ViewState state){
         if(requirementListMenuControllerr==null){
             try {
@@ -225,6 +276,12 @@ public class ViewHandler
 
         return requirementListMenuControllerr.getRoot();
     }
+    /**
+     * A method loading the requirement view
+     * @param fxmlFile the file
+     * @param state the state
+     * @return list
+     */
     private Region loadAddRequirement(String fxmlFile, ViewState state){
         if(addRequirementController == null){
             try {
@@ -241,6 +298,12 @@ public class ViewHandler
         }
         return addRequirementController.getRoot();
 }
+    /**
+     * A method loading the open requirement view
+     * @param fxmlFile the file
+     * @param state the state
+     * @return list
+     */
     private Region labelOpenRequirement(String fxmlFile, ViewState state){
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -255,6 +318,12 @@ public class ViewHandler
         return openRequirementController.getRoot();
 
     }
+    /**
+     * A method loading the team members  view
+     * @param fxmlFile the file
+     * @param state the state
+     * @return list
+     */
 
     private Region labelTeamMebers(String fxmlFile, ViewState state){
         try {
@@ -270,6 +339,12 @@ public class ViewHandler
         return requirementTeamMembersViewController.getRoot();
 
     }
+    /**
+     * A method loading the task list view
+     * @param fxmlFile the file
+     * @param state the state
+     * @return list
+     */
     private Region loadTaskListView(String fxmlFile,ViewState state) {
         if(taskListViewController==null){
             try {
@@ -287,6 +362,12 @@ public class ViewHandler
 
         return taskListViewController.getRoot();
     }
+    /**
+     * A method loading the add task view
+     * @param fxmlFile the file
+     * @param state the state
+     * @return list
+     */
     private Region loadAddTaskView(String fxmlFile,ViewState state) {
         if (addTaskViewController == null) {
             try {
@@ -303,6 +384,12 @@ public class ViewHandler
         }
         return addTaskViewController.getRoot();
     }
+    /**
+     * A method loading the load details view
+     * @param fxmlFile the file
+     * @param state the state
+     * @return list
+     */
     private Region loadTaskDetailsView(String fxmlFile, ViewState state) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -315,6 +402,12 @@ public class ViewHandler
         }
         return taskDetailsViewController.getRoot();
     }
+    /**
+     * A method loading the add time spent view
+     * @param fxmlFile the file
+     * @param state the state
+     * @return list
+     */
     private Region loadAddTimeSpentView(String fxmlFile, ViewState state) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -327,6 +420,12 @@ public class ViewHandler
         }
         return addTimeSpentViewController.getRoot();
     }
+    /**
+     * A method loading the edit deadline view
+     * @param fxmlFile the file
+     * @param state the state
+     * @return list
+     */
     private Region loadEditDeadlineView(String fxmlFile, ViewState state) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -339,6 +438,12 @@ public class ViewHandler
         }
         return editDeadlineViewController.getRoot();
     }
+    /**
+     * A method loading the set task id view
+     * @param fxmlFile the file
+     * @param state the state
+     * @return list
+     */
     private Region loadSetTaskIDView(String fxmlFile, ViewState state) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -350,7 +455,14 @@ public class ViewHandler
             e.printStackTrace();
         }
         return setTaskIDViewController.getRoot();
-    }private Region loadSetTaskNameView(String fxmlFile, ViewState state) {
+    }
+    /**
+     * A method loading set task name view
+     * @param fxmlFile the file
+     * @param state the state
+     * @return list
+     */
+    private Region loadSetTaskNameView(String fxmlFile, ViewState state) {
     try {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(fxmlFile));
@@ -362,6 +474,12 @@ public class ViewHandler
     }
     return setTaskNameViewController.getRoot();
 }
+    /**
+     * A method loading set task description view
+     * @param fxmlFile the file
+     * @param state the state
+     * @return list
+     */
     private Region loadSetTaskDescriptionView(String fxmlFile, ViewState state) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -374,6 +492,12 @@ public class ViewHandler
         }
         return setDescriptionViewController.getRoot();
     }
+    /**
+     * A method loading set estimated hours view
+     * @param fxmlFile the file
+     * @param state the state
+     * @return list
+     */
     private Region loadSetTaskEstimatedHoursView(String fxmlFile, ViewState state) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -386,6 +510,12 @@ public class ViewHandler
         }
         return setEstimatedHoursViewController.getRoot();
     }
+    /**
+     * A method loading set team members view
+     * @param fxmlFile the file
+     * @param state the state
+     * @return list
+     */
     private Region loadTaskTeamMembersView(String fxmlFile, ViewState state) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -398,6 +528,12 @@ public class ViewHandler
         }
         return taskTeamMembersViewController.getRoot();
     }
+    /**
+     * A method loading set team view
+     * @param fxmlFile the file
+     *
+     * @return list
+     */
     private Region loadTeamView(String fxmlFile)
     {
         if (teamViewController == null)
@@ -421,6 +557,12 @@ public class ViewHandler
         }
         return teamViewController.getRoot();
     }
+    /**
+     * A method loading the add team member view
+     * @param fxmlFile the file
+     *
+     * @return list
+     */
     private Region loadAddTeamMemberView(String fxmlFile)
     {
         if (addTeamMemberViewController == null)

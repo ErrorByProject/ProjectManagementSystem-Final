@@ -8,7 +8,10 @@ import javafx.scene.control.Label;
 
 import javafx.scene.layout.Region;
 import java.awt.*;
-
+/**
+ * @author group 3
+ * @version 1.0
+ */
 public class OpenRequirementController {
     @FXML private TextField projectID;
     @FXML private TextField requirementID;
@@ -31,10 +34,20 @@ public class OpenRequirementController {
     private ColourITModel model;
     private ViewHandler viewHandler;
     private ViewState viewState;
+    /**
+     * A 0 argument constructor for the window
+     */
     public OpenRequirementController(){
         //
     }
 
+    /**
+     * A initializer initializing the components
+     * @param viewHandler
+     * @param model
+     * @param root
+     * @param viewState
+     */
     public void init(ViewHandler viewHandler, ColourITModel model, Region root,ViewState viewState){
         this.viewHandler = viewHandler;
         this.model = model;
@@ -43,6 +56,9 @@ public class OpenRequirementController {
         load();
     }
 
+    /**
+     * A load method loading the tex fields
+     */
     public void load(){
         this.errorLabel.setText("");
         this.projectID.setText("");
@@ -82,8 +98,16 @@ public class OpenRequirementController {
         }
     }
 
+    /**
+     * A method getting the root
+     * @return the root
+     */
     public Region getRoot(){return root;}
 
+    /**
+     * A method for the update button
+     *
+     */
     @FXML private void UptadeBpressed(){
         errorLabel.setText("");
 
@@ -109,6 +133,9 @@ public class OpenRequirementController {
         }
     }
 
+    /**
+     * A method canceling the process
+     */
     @FXML private void backButtonPressed(){
         viewState.setSelectedRequirement("");
         viewHandler.openView("RequirementList");}

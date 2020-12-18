@@ -225,6 +225,10 @@ public class Task {
 
     }
 
+    /**
+     * A method converting a task to string
+     * @return the string
+     */
     @Override public String toString()
     {
         return "model.Task:" + "taskID='" + taskID + "', requirementID="

@@ -95,10 +95,7 @@ public class TeamMember
         {
             this.teamMemberID = teamMemberID;
         }
-  /*  else
-    {
-      throw new IllegalArgumentException("The team member ID must contain 4 characters");
-    } */ }
+   }
 
     /**
      * Gets an email of the employee

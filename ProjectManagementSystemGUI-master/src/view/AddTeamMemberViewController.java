@@ -10,6 +10,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import model.*;
 
+/**
+ * @author group 3
+ * @version 1.0
+ */
 public class AddTeamMemberViewController
 {
     @FXML private TextField nameTextField;
@@ -29,11 +33,21 @@ public class AddTeamMemberViewController
     private ColourITModel model;
     private ViewHandler viewHandler;
 
+    /**
+     * A 0 argument constructor for the window
+     */
     public AddTeamMemberViewController()
     {
         // Called by FXMLLoader
     }
 
+
+    /**
+     * A initializer method initializing the components
+     * @param viewHandler the view handeler
+     * @param model the model
+     * @param root the root
+     */
     public void init(ViewHandler viewHandler, ColourITModel model, Region root)
     {
         this.model = model;
@@ -42,6 +56,9 @@ public class AddTeamMemberViewController
         reset();
     }
 
+    /**
+     * A reset method resetting the tex fields
+     */
     public void reset()
     {
         this.errorLabel.setText("");
@@ -59,13 +76,19 @@ public class AddTeamMemberViewController
 
     }
 
+    /**
+     * A method getting the root
+     * @return the root
+     */
     public Region getRoot()
     {
         return root;
     }
 
+
     /**
-     * idTextField needs check for 4 digits, otherwise newbie=null
+     * A method for the button adding the team member
+     *
      */
     @FXML private void addTeamMemberSubmitButton()
     {
@@ -100,6 +123,9 @@ public class AddTeamMemberViewController
         }
     }
 
+    /**
+     * A method canceling the process
+     */
     @FXML private void addTeamMemberCancelButton()
     {
         viewHandler.openView("teamList");
